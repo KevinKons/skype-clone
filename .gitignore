@@ -1,7 +1,5 @@
-Client/.gitignore
-
 # dependencies
-Client/.idea
-Client/.idea/*
-Server/.idea
-Server/.idea/*
+Client_2/.idea
+Client_2/.idea/*
+Server_2/.idea
+Server_2/.idea/*
