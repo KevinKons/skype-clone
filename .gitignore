@@ -1,0 +1,7 @@
+Client/.gitignore
+
+# dependencies
+Client/.idea
+Client/.idea/*
+Server/.idea
+Server/.idea/*
