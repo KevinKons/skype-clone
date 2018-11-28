@@ -30,7 +30,7 @@ public class CommandInvoker {
         commands.put(0, new SignUp());
     }
 
-    public void execute(Socket conn) {
+    public void execute(Socket conn) throws IOException {
         BufferedReader in = null;
         String option = null;
         try {

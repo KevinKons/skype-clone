@@ -23,7 +23,9 @@ public class Server {
         while(true) {
             System.out.println("Waiting connection");
             Socket conn = server.accept();
+            System.out.println("tao");
             ci.execute(conn);
+            
         }
     }
 }
