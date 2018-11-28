@@ -68,6 +68,9 @@ public class ControllerAuthentication {
 //            String message = 0 + "," + user.getName() + "," + user.getNickname() + "," + user.getPassword() + "," + user.getOnline() + "," + user.getIp() + "," + user.getStatus();
 //            out.println(message);
 
+
+            //teste
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
