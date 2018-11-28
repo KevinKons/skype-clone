@@ -16,14 +16,14 @@ public class SignUp implements Command {
 
     @Override
     public void execute(Socket conn, BufferedReader in) throws IOException {
-        ObjectInputStream oIn = new ObjectInputStream(conn.getInputStream());
+//        ObjectInputStream oIn = new ObjectInputStream(conn.getInputStream());
         
-        try {
-            User user = (User) oIn.readObject();
-            System.out.println(user.getIp());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            User user = (User) oIn.readObject();
+//            System.out.println(user.getIp());
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     @Override

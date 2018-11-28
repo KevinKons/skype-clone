@@ -40,7 +40,7 @@ public class CommandInvoker {
             System.out.println("I/O error on creating socket");
             e.printStackTrace();
         }
-
+        System.out.println(option);
         Command comm = commands.get(Integer.parseInt(option)).clonar();
         comm.execute(conn, in);
     }
