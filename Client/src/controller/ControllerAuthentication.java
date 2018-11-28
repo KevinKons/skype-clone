@@ -41,7 +41,7 @@ public class ControllerAuthentication {
             if (!answer.equalsIgnoreCase("null")) {
 
                 String data[] = answer.split(",");
-                manageControllers.setUser(new User(data[0], data[1], data[2], Boolean.parseBoolean(data[3]), data[4], data[5], new ArrayList<>()));
+//                manageControllers.setUser(new User(data[0], data[1], data[2], Boolean.parseBoolean(data[3]), data[4], data[5], new ArrayList<>()));
                 manageControllers.initControllers();
 
             } else {
@@ -65,8 +65,8 @@ public class ControllerAuthentication {
         try {
             //Envia uma requisição para realizar o cadastro do Usuário
             out = new PrintWriter(conn.getOutputStream(), true);
-            String message = 0 + "," + user.getName() + "," + user.getNickname() + "," + user.getPassword() + "," + user.getOnline() + "," + user.getIp() + "," + user.getStatus();
-            out.println(message);
+//            String message = 0 + "," + user.getName() + "," + user.getNickname() + "," + user.getPassword() + "," + user.getOnline() + "," + user.getIp() + "," + user.getStatus();
+//            out.println(message);
 
         } catch (IOException e) {
             e.printStackTrace();
