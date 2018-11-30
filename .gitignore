@@ -3,3 +3,5 @@ Client_2/.idea
 Client_2/.idea/*
 Server_2/.idea
 Server_2/.idea/*
+/Client/nbproject/private/
+/Client/build/
