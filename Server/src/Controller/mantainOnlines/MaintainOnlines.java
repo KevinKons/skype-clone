@@ -19,7 +19,7 @@ public class MaintainOnlines extends Thread {
 
     private static MaintainOnlines instance;
     
-    //nickname / ip
+    //nickname ; ip
     private Map<String, String> onlines = new HashMap<>();
     
     @Override
@@ -31,7 +31,7 @@ public class MaintainOnlines extends Thread {
                     threadAreYouAlive.start();
                 }
                 try {
-                    Thread.sleep(9000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }

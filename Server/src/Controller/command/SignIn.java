@@ -29,6 +29,7 @@ public class SignIn implements Command {
                 sendUser(out, user);
                 MaintainOnlines.getInstance().addOnline(user.getNickname(), user.getIp());
                 UserDAO.editar(user);
+                System.out.println(user.getName() + " está online.");
             } else {
                 out.println("0");
             }
