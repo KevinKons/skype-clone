@@ -25,7 +25,7 @@ public class SignUp implements Command {
             UserDAO.salvar(user);
             out.println(1);
             
-            System.out.println(user.getNickname() + " Signed up");
+            System.out.println(user.getNickname() + " cadastrou-se.");
         } catch(Exception ex) {
             out.println(0);
         }

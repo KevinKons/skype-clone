@@ -18,7 +18,7 @@ public class RemoveContact implements Command {
     @Override
     public void execute(Socket conn, BufferedReader in) throws IOException {
         PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
-
+        // user _nickname ; contact_nickname
         String[] info = in.readLine().split(";");
         try {
             User user = UserDAO.findByNickname(info[0]);
@@ -28,6 +28,7 @@ public class RemoveContact implements Command {
             
             UserDAO.editar(user);
             
+            System.out.println(user.getName() + " excluiu " + user.getName() + " da sua lista de contatos.");
             out.println(1);
         } catch(NoResultException ex) {
             out.println("0");

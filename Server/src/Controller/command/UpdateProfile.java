@@ -16,6 +16,7 @@ public class UpdateProfile implements Command {
     
     @Override
     public void execute(Socket conn, BufferedReader in) throws IOException {
+        // nickname ; name ; status
         String[] info = in.readLine().split(";");
         User user = UserDAO.findByNickname(info[0]);
         user.setName(info[1]);
@@ -24,6 +25,7 @@ public class UpdateProfile implements Command {
         
         PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
         out.println("1");
+        System.out.println(user.getName() + " atualizou seu perfil.");
         CloseConnection.getInstance().close(in, out, conn);
     }
 

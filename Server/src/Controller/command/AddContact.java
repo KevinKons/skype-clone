@@ -18,7 +18,7 @@ public class AddContact implements Command {
     @Override
     public void execute(Socket conn, BufferedReader in) throws IOException {
         PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
-
+        // nickname ; nickname ;
         String[] info = in.readLine().split(";");
         try {
             User user = UserDAO.findByNickname(info[0]);
@@ -30,6 +30,8 @@ public class AddContact implements Command {
             
             out.println(contact.getNickname() + ";" + contact.getName() + ";" +
                     contact.getStatus() + ";" + contact.getIp());
+            
+            System.out.println(user.getName() + " adicinou " + contact.getName() + " a sua lista de contatos.");
         } catch(NoResultException ex) {
             out.println("0");
         } finally {
