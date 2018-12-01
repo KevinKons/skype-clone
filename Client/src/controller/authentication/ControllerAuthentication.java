@@ -28,7 +28,6 @@ public class ControllerAuthentication implements Observed {
         this.config.setPort(port);
     }
     
-    @Override
     public void signUp(String name, String nickname, String password, String repeatPassword) {
         
         if (!password.equalsIgnoreCase(repeatPassword)) {
