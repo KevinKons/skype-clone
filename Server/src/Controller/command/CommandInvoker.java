@@ -29,6 +29,9 @@ public class CommandInvoker {
     private CommandInvoker() {
         commands.put(0, new SignUp());
         commands.put(1, new SignIn());
+        commands.put(2, new UpdateProfile());
+        commands.put(3, new AddContact());
+        commands.put(4, new RemoveContact());
     }
 
     public void execute(Socket conn) throws IOException {

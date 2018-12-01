@@ -7,8 +7,6 @@ public class ManageControllers {
     private static ManageControllers instance;
     private User user;
 
-    private ListenIncommingServerMessages listenIncommingServerMessages = ListenIncommingServerMessages.getInstance();
-
     private ManageControllers() {
     }
 
@@ -28,11 +26,6 @@ public class ManageControllers {
         //Listeners
         ListenCalls listenCalls = new ListenCalls();
         listenCalls.start();
-
-        ListenMessages listenMessages = new ListenMessages();
-        listenMessages.start();
-
-        listenIncommingServerMessages.run();
 
     }
 
