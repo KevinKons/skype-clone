@@ -68,66 +68,63 @@ public class ControllerAuthentication implements Observed {
     }
     
     public User signIn(String nickname, String password) {
-        
-        try {
-            conn = new Socket(this.config.getAddress(), this.config.getPort());
-
-            //Envia uma requisição para realizar o Login
-            PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
-            out.println(1);
-            String message = nickname + ";" + password;
-            out.println(message);
-
-            //Recebe o User
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String answer = in.readLine();
-            
-            try {
-                int content = Integer.parseInt(answer);
-                alert("Usuário ou senha incorretos");
-            } catch (NumberFormatException e) {
-
-                //nickname name status
-                String data[] = answer.split(";");
-                
-                User user = new User(data[1], data[0], "", data[2]);
-                String contact;
-                
-                while ((contact = in.readLine()) != null) {
-                    
-                    String[] contactInfo = contact.split(";");
-                    
-                    User oContact = new User(contactInfo[1], contactInfo[0], "", contactInfo[2]);
-                    oContact.setIp(contactInfo[3]);
-                    
-                    user.addContacts(oContact);
-                }
-
-                //Armazena o usuário autenticado no ManageControllers e 
-                //inicia os serviços
-                manageControllers.setUser(user);
-                manageControllers.initControllers();
-                maintainOnline.start();
-                
-                alert("Login realizado com sucesso!");
-                
-            }
-            
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                conn.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        changeForHome();         
+//        try {
+//            conn = new Socket(this.config.getAddress(), this.config.getPort());
+//
+//            //Envia uma requisição para realizar o Login
+//            PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
+//            out.println(1);
+//            String message = nickname + ";" + password;
+//            out.println(message);
+//
+//            //Recebe o User
+//            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//            String answer = in.readLine();
+//            
+//            try {
+//                Integer.parseInt(answer);
+//                alert("Usuário ou senha incorretos");
+//            } catch (NumberFormatException e) {
+//
+//                //nickname name status
+//                String data[] = answer.split(";");
+//                
+//                User user = new User(data[1], data[0], "", data[2]);
+//                String contact;
+//                
+//                while ((contact = in.readLine()) != null) {
+//                    
+//                    String[] contactInfo = contact.split(";");
+//                    
+//                    User oContact = new User(contactInfo[1], contactInfo[0], "", contactInfo[2]);
+//                    oContact.setIp(contactInfo[3]);
+//                    
+//                    user.addContacts(oContact);
+//                }
+//
+//                //Armazena o usuário autenticado no ManageControllers e 
+//                //inicia os serviços
+//                manageControllers.setUser(user);
+//                manageControllers.initControllers();
+//                maintainOnline.start();
+//                
+//                alert("Login realizado com sucesso!");
+//                changeForHome();                
+//                
+//            }
+//            
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        } finally {
+//            try {
+//                conn.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         
         return null;
-    }
-    
-    private void startMaintainOnline() {
-        maintainOnline.start();
     }
     
     @Override
@@ -143,6 +140,12 @@ public class ControllerAuthentication implements Observed {
     private void alert(String message) {
         for (Observer obs : observers) {
             obs.alert(message);
+        }
+    }
+    
+    private void changeForHome(){
+        for(Observer obs: observers){
+            obs.changeForHome();
         }
     }
     
