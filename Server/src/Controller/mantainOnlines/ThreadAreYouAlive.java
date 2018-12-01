@@ -57,6 +57,7 @@ public class ThreadAreYouAlive extends Thread {
 
             in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             in.readLine();
+            System.out.println(nickname + " está online");
             return false;
         } catch (SocketTimeoutException ex) {
             return true;

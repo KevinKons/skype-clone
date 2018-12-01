@@ -16,14 +16,13 @@ import java.util.List;
  */
 public class ControllerHome implements Observed {
 
-    private List<ObserverHome> observers = new ArrayList<>();    
+    private List<ObserverHome> observers = new ArrayList<>();
 
-    public void addContact(String nickname) {        
-        ControllerContacts controllerContacts = new ControllerContacts();        
+    public void addContact(String nickname) {
+        ControllerContacts controllerContacts = new ControllerContacts();
         try {
             controllerContacts.executeStrategy(new AddContact(), nickname);
         } catch (Exception e) {
-            e.printStackTrace();
             alert(e.getMessage());
         }
     }
@@ -43,10 +42,10 @@ public class ControllerHome implements Observed {
             obs.alert(message);
         }
     }
-    
-    private void setNameNavBar(){  
+
+    private void setNameNavBar() {
         System.out.println("Observers: " + observers.size());
-        for(ObserverHome obs: observers){
+        for (ObserverHome obs : observers) {
             obs.setNameNavBar(ManageControllers.getInstance().getUser().getName());
         }
     }
