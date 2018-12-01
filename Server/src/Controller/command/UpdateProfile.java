@@ -21,12 +21,17 @@ public class UpdateProfile implements Command {
         User user = UserDAO.findByNickname(info[0]);
         user.setName(info[1]);
         user.setStatus(info[2]);
-        UserDAO.editar(user);
         
-        PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
-        out.println("1");
-        System.out.println(user.getName() + " atualizou seu perfil.");
-        CloseConnection.getInstance().close(in, out, conn);
+        PrintWriter out = null;
+        try {
+            UserDAO.editar(user);
+            out = new PrintWriter(conn.getOutputStream(), true);
+            out.println("1");
+            System.out.println(user.getName() + " atualizou seu perfil.");
+            CloseConnection.getInstance().close(in, out, conn);
+        } catch(Exception ex) {
+            out.println(0);
+        }
     }
 
     @Override
