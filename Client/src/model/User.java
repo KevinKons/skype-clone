@@ -24,6 +24,13 @@ public class User {
         this.password = password;
         this.status = status;
     }
+    
+    public User(String nickname, String name, String status) {
+        this.nickname = nickname;
+        this.name = name;
+        this.status = status;
+    }
+    
 
     public int getId() {
         return id;
@@ -81,7 +88,7 @@ public class User {
         this.contacts = contacts;
     }
 
-    public void addContacts(User contact) {
+    public void addContact(User contact) {
         this.contacts.add(contact);
     }
 

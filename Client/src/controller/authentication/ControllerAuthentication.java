@@ -28,7 +28,6 @@ public class ControllerAuthentication implements Observed {
         this.config.setPort(port);
     }
     
-    @Override
     public void signUp(String name, String nickname, String password, String repeatPassword) {
         
         if (!password.equalsIgnoreCase(repeatPassword)) {
@@ -68,6 +67,7 @@ public class ControllerAuthentication implements Observed {
     }
     
     public User signIn(String nickname, String password) {
+
         changeForHome();         
 //        try {
 //            conn = new Socket(this.config.getAddress(), this.config.getPort());

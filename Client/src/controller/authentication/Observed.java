@@ -5,7 +5,6 @@
  */
 package controller.authentication;
 
-import model.User;
 
 /**
  *
@@ -15,6 +14,5 @@ public interface Observed {
 
     void addObserver(Observer obs);
     void removeObserver(Observer obs);
-    void signUp(String name, String nickname, String password, String RepeatPassword);
     
 }
