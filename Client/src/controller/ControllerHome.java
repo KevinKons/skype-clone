@@ -19,11 +19,11 @@ public class ControllerHome implements Observed {
     private List<ObserverHome> observers = new ArrayList<>();    
 
     public void addContact(String nickname) {        
-        ControllerContacts controllerContacts = new ControllerContacts();
-        controllerContacts.setStrategy(new AddContact());
+        ControllerContacts controllerContacts = new ControllerContacts();        
         try {
-            controllerContacts.execute(nickname);
+            controllerContacts.executeStrategy(new AddContact(), nickname);
         } catch (Exception e) {
+            e.printStackTrace();
             alert(e.getMessage());
         }
     }

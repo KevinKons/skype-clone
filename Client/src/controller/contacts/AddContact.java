@@ -19,19 +19,21 @@ public class AddContact implements Strategy {
     @Override
     public void execute(String nickname) throws Exception {
         Config conf = Config.getInstance();
-        
+        System.out.println("Chegou no add");
         try {
             Socket conn = new Socket(conf.getAddress(), conf.getPort());
             PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             
             out.println(3);
-            out.print(nickname);
+            out.println(nickname);
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             
             String response = in.readLine();
-            if(Integer.parseInt(response) == 0) {
+            try {
+                Integer.parseInt(response);
                 throw new Exception("User not found");
-            } else {
+            } catch(NumberFormatException ex) {
                 //nickname ; name ; status ; ip
                 String[] info = response.split(";");
                 User contact = new User(info[0], info[1], info[2]);

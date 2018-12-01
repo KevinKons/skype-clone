@@ -263,4 +263,9 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         System.out.println("Nome: " + name);
         lblUsername.setText(name);
     }
+
+    @Override
+    public void notifiesUserLogin(String nickname, String ip) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

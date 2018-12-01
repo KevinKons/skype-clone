@@ -5,7 +5,6 @@
  */
 package controller.authentication;
 
-
 /**
  *
  * @author dougl

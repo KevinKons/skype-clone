@@ -12,5 +12,6 @@ public interface ObserverHome extends Observer {
     public void notifiesUserAdded(String nickname, String name, String status,
             String ip);
     void setNameNavBar(String name);
+    public void notifiesUserLogin(String nickname, String ip);
     
 }

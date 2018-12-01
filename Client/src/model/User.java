@@ -36,8 +36,12 @@ public class User implements Observed {
     
     public void setIp(String ip) {
         this.ip = ip;
-        for(ObserverHome o : this.observers) {
-            o.notifiesUserLogout(ip);
+        if(ip == null) {
+            for(ObserverHome o : this.observers) 
+                o.notifiesUserLogout(ip);
+        } else {
+            for(ObserverHome o : this.observers) 
+                o.notifiesUserLogin(this.nickname ,ip);
         }
     }
 
