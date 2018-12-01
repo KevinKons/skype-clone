@@ -1,4 +1,4 @@
-import controller.ControllerAuthentication;
+import controller.authentication.ControllerAuthentication;
 
 public class Main {
 

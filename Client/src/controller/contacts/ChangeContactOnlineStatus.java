@@ -11,13 +11,15 @@ package controller.contacts;
  */
 public class ChangeContactOnlineStatus implements Command {
 
+    
+
     @Override
-    public void execute() {
+    public Command clonar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Command clonar() {
+    public void execute(String nickname) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

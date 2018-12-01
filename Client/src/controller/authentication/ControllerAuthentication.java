@@ -1,5 +1,7 @@
-package controller;
+package controller.authentication;
 
+import controller.MaintainOnline;
+import controller.ManageControllers;
 import model.User;
 
 import java.io.BufferedReader;

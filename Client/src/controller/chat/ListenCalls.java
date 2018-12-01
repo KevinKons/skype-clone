@@ -1,5 +1,6 @@
-package controller;
+package controller.chat;
 
+import controller.Call;
 import java.net.ServerSocket;
 
 public class ListenCalls extends Thread {

@@ -12,6 +12,6 @@ package controller.contacts;
  */
 public interface Command {
     
-    public void execute();
+    public void execute(String nickname);
     public Command clonar();
 }

@@ -5,8 +5,8 @@
  */
 package view;
 
-import controller.ControllerAuthentication;
-import controller.Observer;
+import controller.authentication.ControllerAuthentication;
+import controller.authentication.Observer;
 import javax.swing.JOptionPane;
 
 /**

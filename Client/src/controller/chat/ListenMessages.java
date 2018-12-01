@@ -1,7 +1,7 @@
-package controller;
+package controller.chat;
 
+import controller.ManageControllers;
 import model.Chat;
-import model.User;
 
 import java.io.BufferedReader;
 import java.io.IOException;
