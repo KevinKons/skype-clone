@@ -1,19 +1,22 @@
 package model;
 
+import controller.ObserverHome;
+import controller.authentication.Observed;
+import controller.authentication.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Observed {
 
-    private int id;
     private String ip;
     private String name;
     private String nickname;
     private String password;
-    private boolean online;
     private String status;
     private List<Chat> chats = new ArrayList<>();
     private List<User> contacts = new ArrayList<>();
+    
+    private List<ObserverHome> observers = new ArrayList<>();
 
     public User() {
     }
@@ -31,17 +34,11 @@ public class User {
         this.status = status;
     }
     
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setIp(String ip) {
         this.ip = ip;
+        for(ObserverHome o : this.observers) {
+            o.notifiesUserLogout(ip);
+        }
     }
 
     public String getIp() {
@@ -64,13 +61,6 @@ public class User {
         this.nickname = nickname;
     }
 
-    public boolean isOnline() {
-        return online;
-    }
-
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
 
     public String getStatus() {
         return status;
@@ -90,6 +80,10 @@ public class User {
 
     public void addContact(User contact) {
         this.contacts.add(contact);
+        for(ObserverHome o : this.observers) {
+            o.notifiesUserAdded(contact.getNickname(), contact.getName(),
+                    contact.getStatus(), contact.getIp());
+        }
     }
 
     public String getPassword() {
@@ -110,5 +104,15 @@ public class User {
 
     public void addChat(Chat chat) {
         this.chats.add(chat);
+    }
+
+    @Override
+    public void addObserver(Observer obs) {
+        observers.add((ObserverHome) obs);
+    }
+
+    @Override
+    public void removeObserver(Observer obs) {
+        observers.remove(obs);
     }
 }
