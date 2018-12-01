@@ -13,11 +13,11 @@ import javax.swing.JOptionPane;
  *
  * @author dougl
  */
-public class Main extends javax.swing.JFrame implements Observer {
+public class Authentication extends javax.swing.JFrame implements Observer {
 
     private static ControllerAuthentication controller;
 
-    public Main() {
+    public Authentication() {
 
         controller.addObserver(this);
 
@@ -250,10 +250,10 @@ public class Main extends javax.swing.JFrame implements Observer {
     public static void main(String args[]) {
 
 //        controller = new ControllerAuthentication(args[0], Integer.parseInt(args[1]));
-           controller = new ControllerAuthentication("192.168.0.54", 56000);
+        controller = new ControllerAuthentication("192.168.0.54", 56000);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new Authentication().setVisible(true);
             }
         });
     }
@@ -285,5 +285,14 @@ public class Main extends javax.swing.JFrame implements Observer {
     @Override
     public void alert(String message) {
         JOptionPane.showMessageDialog(null, message);
+    }
+
+    @Override
+    public void changeForHome() {
+
+        Home home = new Home();
+        home.setVisible(true);
+        this.dispose();
+
     }
 }
