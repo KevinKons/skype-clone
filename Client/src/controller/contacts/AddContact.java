@@ -17,7 +17,7 @@ import model.User;
 public class AddContact implements Strategy {
 
     @Override
-    public void execute(String nickname) throws Exception {
+    public void execute(String contactNickname) throws Exception {
         Config conf = Config.getInstance();
         
         try {
@@ -26,7 +26,8 @@ public class AddContact implements Strategy {
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             
             out.println(3);
-            out.print(nickname);
+            String userNickname = ManageControllers.getInstance().getUser().getNickname();
+            out.print(userNickname + ";" + contactNickname);
             
             String response = in.readLine();
             try {
