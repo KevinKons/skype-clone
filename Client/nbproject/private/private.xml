@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/dougl/Documents/Repositorios/skype-clone/Client/src/controller/Observer.java</file>
+            <file>file:/C:/Users/dougl/Documents/Repositorios/skype-clone/Client/src/controller/ControllerProfile.java</file>
+            <file>file:/C:/Users/dougl/Documents/Repositorios/skype-clone/Client/src/model/Config.java</file>
+            <file>file:/C:/Users/dougl/Documents/Repositorios/skype-clone/Client/src/controller/SendMessageToClient.java</file>
             <file>file:/C:/Users/dougl/Documents/Repositorios/skype-clone/Client/src/controller/ControllerAuthentication.java</file>
-            <file>file:/C:/Users/dougl/Documents/Repositorios/skype-clone/Client/src/view/Main.java</file>
         </group>
     </open-files>
 </project-private>

@@ -15,7 +15,7 @@ public class ControllerContacts {
     }
 
     public void addContact(String nickname) {
-        printWriter(22, nickname);
+        printWriter(3, nickname);
     }
 
     public void changeContactOnlineStatus(User user) {
@@ -23,7 +23,7 @@ public class ControllerContacts {
     }
 
     public void removeContact(String nickname) {
-        printWriter(22, nickname);
+        printWriter(4, nickname);
     }
 
     private void printWriter(int code, String nickname) {

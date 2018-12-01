@@ -8,7 +8,7 @@ public class SendMessageToClient extends Thread {
 
     private Object content;
     private String ip;
-    private final int PORT = 56001;
+    private final int PORT = 56000;
 
     public SendMessageToClient(Object content, String ip) {
         this.content = content;
