@@ -100,7 +100,7 @@ public class ControllerAuthentication implements Observed {
                     User oContact = new User(contactInfo[1], contactInfo[0], "", contactInfo[2]);
                     oContact.setIp(contactInfo[3]);
                     
-                    user.addContacts(oContact);
+                    user.addContact(oContact);
                 }
 
                 //Armazena o usuário autenticado no ManageControllers e 
