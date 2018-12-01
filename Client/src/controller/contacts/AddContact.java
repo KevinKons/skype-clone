@@ -29,9 +29,10 @@ public class AddContact implements Strategy {
             out.print(nickname);
             
             String response = in.readLine();
-            if(Integer.parseInt(response) == 0) {
+            try {
+                Integer.parseInt(response);
                 throw new Exception("User not found");
-            } else {
+            } catch(NumberFormatException ex) {
                 //nickname ; name ; status ; ip
                 String[] info = response.split(";");
                 User contact = new User(info[0], info[1], info[2]);

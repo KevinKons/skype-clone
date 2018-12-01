@@ -19,7 +19,6 @@ public class SendMessageToClient extends Thread {
     public void run() {
 
         try {
-
             Socket conn = new Socket(ip, PORT);
             PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
             out.println(content);

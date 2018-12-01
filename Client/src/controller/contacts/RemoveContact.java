@@ -34,9 +34,10 @@ public class RemoveContact implements Strategy {
             out.print(nickname);
             
             String response = in.readLine();
-            if(Integer.parseInt(response) == 0) {
-                throw new Exception("User not found");
-            } else {
+            try {
+               Integer.parseInt(response); 
+               throw new Exception("User not found");
+            } catch(NumberFormatException ex) {
                 List<User> contacts = ManageControllers.getInstance().getUser().getContacts();
                 for(int i = 0; i < contacts.size(); i++) {
                     User contact = contacts.get(i);
