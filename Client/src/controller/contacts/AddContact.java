@@ -38,6 +38,7 @@ public class AddContact implements Strategy {
                 contact.setIp(info[3]);
                 
                 ManageControllers.getInstance().getUser().addContact(contact);
+                System.out.println("Adicionou o usuario: " + contact.getName());
             }
         } catch (IOException ex) {
             ex.printStackTrace();

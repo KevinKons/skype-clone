@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.ManageControllers;
 import controller.authentication.ControllerAuthentication;
 import controller.authentication.Observer;
 import javax.swing.JOptionPane;
@@ -250,7 +251,7 @@ public class Authentication extends javax.swing.JFrame implements Observer {
     public static void main(String args[]) {
 
 //        controller = new ControllerAuthentication(args[0], Integer.parseInt(args[1]));
-        controller = new ControllerAuthentication("192.168.0.54", 56000);
+        controller = new ControllerAuthentication("192.168.0.138", 56000);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Authentication().setVisible(true);
@@ -289,7 +290,7 @@ public class Authentication extends javax.swing.JFrame implements Observer {
 
     @Override
     public void changeToHome() {
-        Home home = new Home();
+        Home home = new Home(ManageControllers.getInstance().getUser().getName());
         home.setVisible(true);
         this.dispose();
     }

@@ -2,6 +2,7 @@ package controller.authentication;
 
 import controller.MaintainOnline;
 import controller.ManageControllers;
+import controller.contacts.ControllerContacts;
 import model.User;
 
 import java.io.BufferedReader;
@@ -36,16 +37,13 @@ public class ControllerAuthentication implements Observed {
             PrintWriter out = null;
             BufferedReader in;
             try {
-                System.out.println("Abrindo socket");
                 //Envia uma requisição para realizar o cadastro do Usuário
                 conn = new Socket(this.config.getAddress(), this.config.getPort());
-                System.out.println("abaixo do socket");
                 out = new PrintWriter(conn.getOutputStream(), true);
                 out.println(0);
-                //nickname name password status
-                String message = nickname + ";" + name + ";" + password + ";" + "Hey, i'm using Skype-Clone!";
+                //nickname password name status
+                String message = nickname + ";" + password + ";" + name + ";" + "Hey, i'm using Skype-Clone!";
                 out.println(message);
-                System.out.println("enivou user");
 
                 //Espera uma resposta
                 in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -67,62 +65,61 @@ public class ControllerAuthentication implements Observed {
     }
     
     public User signIn(String nickname, String password) {
+              
+        try {
+            conn = new Socket(this.config.getAddress(), this.config.getPort());
 
-        changeForHome();         
-//        try {
-//            conn = new Socket(this.config.getAddress(), this.config.getPort());
-//
-//            //Envia uma requisição para realizar o Login
-//            PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
-//            out.println(1);
-//            String message = nickname + ";" + password;
-//            out.println(message);
-//
-//            //Recebe o User
-//            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//            String answer = in.readLine();
-//            
-//            try {
-//                Integer.parseInt(answer);
-//                alert("Usuário ou senha incorretos");
-//            } catch (NumberFormatException e) {
-//
-//                //nickname name status
-//                String data[] = answer.split(";");
-//                
-//                User user = new User(data[1], data[0], "", data[2]);
-//                String contact;
-//                
-//                while ((contact = in.readLine()) != null) {
-//                    
-//                    String[] contactInfo = contact.split(";");
-//                    
-//                    User oContact = new User(contactInfo[1], contactInfo[0], "", contactInfo[2]);
-//                    oContact.setIp(contactInfo[3]);
-//                    
-//                    user.addContacts(oContact);
-//                }
-//
-//                //Armazena o usuário autenticado no ManageControllers e 
-//                //inicia os serviços
-//                manageControllers.setUser(user);
-//                manageControllers.initControllers();
-//                maintainOnline.start();
-//                
-//                alert("Login realizado com sucesso!");
-//                changeForHome();                
-//                
-//            }
-//            
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        } finally {
-//            try {
-//                conn.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
+            //Envia uma requisição para realizar o Login
+            PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
+            out.println(1);
+            String message = nickname + ";" + password;
+            out.println(message);
+
+            //Recebe o User
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String answer = in.readLine();
+            
+            try {
+                Integer.parseInt(answer);
+                alert("Usuário ou senha incorretos");
+            } catch (NumberFormatException e) {
+
+                //nickname name status
+                String data[] = answer.split(";");
+                
+                User user = new User(data[1], data[0], "", data[2]);
+                String contact;                                
+                
+                while ((contact = in.readLine()) != null) {
+                    
+                    String[] contactInfo = contact.split(";");
+                    
+                    User oContact = new User(contactInfo[1], contactInfo[0], "", contactInfo[2]);
+                    oContact.setIp(contactInfo[3]);
+                    
+                    user.setContact(oContact);
+                }
+
+                //Armazena o usuário autenticado no ManageControllers e 
+                //inicia os serviços
+                manageControllers.setUser(user);
+                manageControllers.initControllers();
+                maintainOnline.start();
+                
+                alert("Login realizado com sucesso!");
+                changeForHome();                
+                
+            }
+            
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                conn.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         
         return null;
     }

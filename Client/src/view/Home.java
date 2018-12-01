@@ -5,17 +5,24 @@
  */
 package view;
 
+import controller.ControllerHome;
+import controller.ObserverHome;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author dougl
  */
-public class Home extends javax.swing.JFrame {
+public class Home extends javax.swing.JFrame implements ObserverHome {
 
-    /**
-     * Creates new form Home
-     */
-    public Home() {
-        initComponents();    
+    private ControllerHome controllerHome;
+
+    public Home(String nickname) {
+        controllerHome = new ControllerHome();
+        controllerHome.addObserver(this);
+        
+        initComponents();
+        lblUsername.setText(nickname);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }
@@ -209,7 +216,8 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddContactActionPerformed
-       
+        String nickname = JOptionPane.showInputDialog("Digite o nickname do usuário:");
+        controllerHome.addContact(nickname);
     }//GEN-LAST:event_btnAddContactActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -229,4 +237,30 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrollPanelMessages;
     private javax.swing.JTextField txtMessage;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void alert(String message) {
+        JOptionPane.showMessageDialog(null, message);
+    }
+
+    @Override
+    public void notifiesUserLogout(String ip) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void notifiesUserAdded(String nickname, String name, String status, String ip) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void changeToHome() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setNameNavBar(String name) {
+        System.out.println("Nome: " + name);
+        lblUsername.setText(name);
+    }
 }

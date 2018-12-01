@@ -77,6 +77,10 @@ public class User implements Observed {
     public void setContacts(List<User> contacts) {
         this.contacts = contacts;
     }
+    
+    public void setContact(User contact){
+        this.contacts.add(contact);
+    }
 
     public void addContact(User contact) {
         this.contacts.add(contact);
@@ -115,4 +119,11 @@ public class User implements Observed {
     public void removeObserver(Observer obs) {
         observers.remove(obs);
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "ip=" + ip + ", name=" + name + ", nickname=" + nickname + ", password=" + password + ", status=" + status + ", chats=" + chats + ", contacts=" + contacts + ", observers=" + observers + '}';
+    }
+    
+    
 }
