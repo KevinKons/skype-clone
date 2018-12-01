@@ -288,11 +288,9 @@ public class Authentication extends javax.swing.JFrame implements Observer {
     }
 
     @Override
-    public void changeForHome() {
-
+    public void changeToHome() {
         Home home = new Home();
         home.setVisible(true);
         this.dispose();
-
     }
 }

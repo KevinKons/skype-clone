@@ -145,7 +145,7 @@ public class ControllerAuthentication implements Observed {
     
     private void changeForHome(){
         for(Observer obs: observers){
-            obs.changeForHome();
+            obs.changeToHome();
         }
     }
     

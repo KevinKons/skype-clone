@@ -12,6 +12,6 @@ package controller.authentication;
 public interface Observer {
     
     void alert(String message);
-    void changeForHome();
+    void changeToHome();
     
 }
