@@ -32,6 +32,7 @@ public class ThreadAreYouAlive extends Thread {
 
     @Override
     public void run() {
+        System.out.println("verificando se " + nickname + " ESTA VIVO");
         Socket conn = null;
         PrintWriter out = null;
         BufferedReader in = null;
@@ -68,6 +69,8 @@ public class ThreadAreYouAlive extends Thread {
     }
 
     private void handleUserLogout() throws IOException {
+        System.out.println(nickname + " ficou offline");
+        
         MaintainOnlines maintainOnlines = MaintainOnlines.getInstance();
 
         maintainOnlines.removeOnline(nickname);

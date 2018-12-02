@@ -79,6 +79,25 @@ public class UserDAO {
             emf.close();
         }
     }
+    
+    public static User findByIp(String ip) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        try {
+            Query query = em.createQuery("SELECT u From User u where u.ip = :ip");
+            query.setParameter("ip", ip);
+            User user = (User) query.getSingleResult();
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+            return null;
+        } finally {
+            em.close();
+            emf.close();
+        }
+    }
 
     public static void editar(User u) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");

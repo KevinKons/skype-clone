@@ -25,7 +25,7 @@ public class User implements Serializable {
     @Column(name = "status", nullable = false, length = 100)
     private String status;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name="user_contact",
             joinColumns = {@JoinColumn(name="id_user")},
             inverseJoinColumns = {@JoinColumn(name="id_contact")})
