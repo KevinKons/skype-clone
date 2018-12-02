@@ -32,7 +32,6 @@ public class ThreadAreYouAlive extends Thread {
 
     @Override
     public void run() {
-        System.out.println("verificando se " + nickname + " ESTA VIVO");
         Socket conn = null;
         PrintWriter out = null;
         BufferedReader in = null;
