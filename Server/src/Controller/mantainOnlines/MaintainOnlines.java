@@ -24,6 +24,7 @@ public class MaintainOnlines extends Thread {
 
     @Override
     public void run() {
+        System.out.println("iniciando maintain online");
         while (true) {
             if (!onlines.isEmpty()) {
                 for (Map.Entry<String, String> pair : onlines.entrySet()) {

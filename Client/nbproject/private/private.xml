@@ -2,18 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/dougl/Documents/Repositorios/skype-clone/Client/src/controller/ControllerProfile.java</file>
-            <file>file:/C:/Users/dougl/Documents/Repositorios/skype-clone/Client/src/model/Config.java</file>
-            <file>file:/C:/Users/dougl/Documents/Repositorios/skype-clone/Client/src/controller/SendMessageToClient.java</file>
-            <file>file:/C:/Users/dougl/Documents/Repositorios/skype-clone/Client/src/controller/ControllerAuthentication.java</file>
-=======
-            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Client/src/controller/listenIncommingServerMessages/CommandInvokerIncommingServerMessages.java</file>
-            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Client/src/controller/listenIncommingServerMessages/ListenIncommingServerMessages.java</file>
-            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Client/src/controller/listenIncommingServerMessages/AddContact.java</file>
-            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Client/src/controller/listenIncommingServerMessages/Command.java</file>
->>>>>>> master
-        </group>
+        <group/>
     </open-files>
 </project-private>
