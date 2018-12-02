@@ -24,8 +24,7 @@ public class AddContact implements Strategy {
             PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
 
             out.println(3);
-            String userNickname = ManageControllers.getInstance().getUser().getNickname();
-            out.println(userNickname + ";" + contactNickname);
+            out.println(contactNickname);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 

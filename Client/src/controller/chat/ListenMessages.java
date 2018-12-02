@@ -18,7 +18,7 @@ public class ListenMessages extends Thread {
     public void run() {
 
         try {
-            serverSocket = new ServerSocket(56001);
+            serverSocket = new ServerSocket(56002);
             serverSocket.setReuseAddress(true);
 
             while (true) {

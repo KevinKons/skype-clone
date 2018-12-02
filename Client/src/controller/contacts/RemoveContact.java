@@ -36,8 +36,7 @@ public class RemoveContact implements Strategy {
             String response = in.readLine();
             if (Integer.parseInt(response) == 0) {
                 throw new Exception("User not found");
-            }
-            if (Integer.parseInt(response) == 1) {
+            } else {
                 List<User> contacts = ManageControllers.getInstance().getUser().getContacts();
                 for (int i = 0; i < contacts.size(); i++) {
                     User contact = contacts.get(i);
@@ -45,9 +44,6 @@ public class RemoveContact implements Strategy {
                         contacts.remove(contact);
                     }
                 }
-
-            } else {
-                System.out.println("Ta vindo algo estranho aqui...");
             }
         } catch (IOException ex) {
             ex.printStackTrace();
