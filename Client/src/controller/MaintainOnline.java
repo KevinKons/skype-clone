@@ -7,8 +7,6 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.User;
 
 public class MaintainOnline extends Thread {
@@ -21,7 +19,7 @@ public class MaintainOnline extends Thread {
             PrintWriter out;
             BufferedReader in;
             while (true) {
-                ServerSocket server = new ServerSocket(56000);
+                ServerSocket server = new ServerSocket(56001);
                 server.setReuseAddress(true);
                 Socket conn = server.accept();
 

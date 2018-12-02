@@ -7,8 +7,10 @@ package controller;
 
 import controller.contacts.AddContact;
 import controller.contacts.ControllerContacts;
+import controller.contacts.RemoveContact;
 import java.util.ArrayList;
 import java.util.List;
+import model.User;
 
 /**
  *
@@ -19,11 +21,13 @@ public class ControllerHome implements Observed {
     private List<ObserverHome> observers = new ArrayList<>();
 
     public void addContact(String nickname) {
-        ControllerContacts controllerContacts = new ControllerContacts();
-        try {
-            controllerContacts.executeStrategy(new AddContact(), nickname);
-        } catch (Exception e) {
-            alert(e.getMessage());
+        if (nickname != null) {
+            ControllerContacts controllerContacts = new ControllerContacts();
+            try {
+                controllerContacts.executeStrategy(new AddContact(), nickname);
+            } catch (Exception e) {
+                alert(e.getMessage());
+            }
         }
     }
 
@@ -43,10 +47,21 @@ public class ControllerHome implements Observed {
         }
     }
 
-    private void setNameNavBar() {
-        System.out.println("Observers: " + observers.size());
-        for (ObserverHome obs : observers) {
-            obs.setNameNavBar(ManageControllers.getInstance().getUser().getName());
+    public void showContacts() {
+        for (User contact : ManageControllers.getInstance().getUser().getContacts()) {
+            for (ObserverHome obs : observers) {
+                obs.showContact(contact.getNickname(), contact.getName(), contact.getStatus());
+            }
+        }
+    }
+
+    public void removeContact(String nickname) {
+        ControllerContacts controllerContacts = new ControllerContacts();
+        try {
+            controllerContacts.executeStrategy(new RemoveContact(), nickname);
+            System.out.println("Removeu:" + nickname);
+        } catch (Exception e) {
+            alert(e.getMessage());
         }
     }
 

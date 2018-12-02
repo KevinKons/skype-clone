@@ -20,31 +20,34 @@ import model.User;
  * @author Kevin
  */
 public class RemoveContact implements Strategy {
-    
+
     @Override
     public void execute(String nickname) throws Exception {
         Config conf = Config.getInstance();
-        
+
         try {
             Socket conn = new Socket(conf.getAddress(), conf.getPort());
             PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            
+
             out.println(4);
-            out.print(nickname);
-            
+            out.println(nickname);
+
             String response = in.readLine();
-            try {
-               Integer.parseInt(response); 
-               throw new Exception("User not found");
-            } catch(NumberFormatException ex) {
+            if (Integer.parseInt(response) == 0) {
+                throw new Exception("User not found");
+            }
+            if (Integer.parseInt(response) == 1) {
                 List<User> contacts = ManageControllers.getInstance().getUser().getContacts();
-                for(int i = 0; i < contacts.size(); i++) {
+                for (int i = 0; i < contacts.size(); i++) {
                     User contact = contacts.get(i);
-                    if(contact.getNickname().equalsIgnoreCase(nickname)) {
+                    if (contact.getNickname().equalsIgnoreCase(nickname)) {
                         contacts.remove(contact);
                     }
                 }
+
+            } else {
+                System.out.println("Ta vindo algo estranho aqui...");
             }
         } catch (IOException ex) {
             ex.printStackTrace();

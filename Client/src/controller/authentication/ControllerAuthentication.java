@@ -18,19 +18,19 @@ public class ControllerAuthentication implements Observed {
 
     //Socket
     private Socket conn;
-    private Config config = Config.getInstance();    
-    
+    private Config config = Config.getInstance();
+
     private MaintainOnline maintainOnline = new MaintainOnline();
     private ManageControllers manageControllers = ManageControllers.getInstance();
     private List<Observer> observers = new ArrayList<>();
-    
+
     public ControllerAuthentication(String address, int port) {
         this.config.setAddress(address);
         this.config.setPort(port);
     }
-    
+
     public void signUp(String name, String nickname, String password, String repeatPassword) {
-        
+
         if (!password.equalsIgnoreCase(repeatPassword)) {
             alert("Senhas não conferem!");
         } else {
@@ -57,15 +57,15 @@ public class ControllerAuthentication implements Observed {
                 } else {
                     alert("Cadastro realizado com sucesso!");
                 }
-                
-            } catch (IOException e) {                
+
+            } catch (IOException e) {
                 alert("Erro!\n\n" + e.getMessage());
             }
         }
     }
-    
+
     public User signIn(String nickname, String password) {
-              
+
         try {
             conn = new Socket(this.config.getAddress(), this.config.getPort());
 
@@ -78,7 +78,7 @@ public class ControllerAuthentication implements Observed {
             //Recebe o User
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String answer = in.readLine();
-            
+
             try {
                 Integer.parseInt(answer);
                 alert("Usuário ou senha incorretos");
@@ -86,18 +86,19 @@ public class ControllerAuthentication implements Observed {
 
                 //nickname name status
                 String data[] = answer.split(";");
-                
+
                 User user = new User(data[1], data[0], "", data[2]);
-                String contact;                                
-                
+                String contact;
+
                 while ((contact = in.readLine()) != null) {
-                    
+
                     String[] contactInfo = contact.split(";");
-                    
+
                     User oContact = new User(contactInfo[1], contactInfo[0], "", contactInfo[2]);
                     oContact.setIp(contactInfo[3]);
-                    
+
                     user.setContact(oContact);
+                    System.out.println("Usuário: " + oContact.getName() + " identificado como seu amigo");
                 }
 
                 //Armazena o usuário autenticado no ManageControllers e 
@@ -105,12 +106,11 @@ public class ControllerAuthentication implements Observed {
                 manageControllers.setUser(user);
                 manageControllers.initControllers();
                 maintainOnline.start();
-                
-                alert("Login realizado com sucesso!");
-                changeForHome();                
-                
+
+                changeForHome();
+
             }
-            
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -120,30 +120,30 @@ public class ControllerAuthentication implements Observed {
                 e.printStackTrace();
             }
         }
-        
+
         return null;
     }
-    
+
     @Override
     public void addObserver(Observer obs) {
         observers.add(obs);
     }
-    
+
     @Override
     public void removeObserver(Observer obs) {
         observers.remove(obs);
     }
-    
+
     private void alert(String message) {
         for (Observer obs : observers) {
             obs.alert(message);
         }
     }
-    
-    private void changeForHome(){
-        for(Observer obs: observers){
+
+    private void changeForHome() {
+        for (Observer obs : observers) {
             obs.changeToHome();
         }
     }
-    
+
 }
