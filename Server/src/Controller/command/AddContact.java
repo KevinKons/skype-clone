@@ -18,11 +18,10 @@ public class AddContact implements Command {
     @Override
     public void execute(Socket conn, BufferedReader in) throws IOException {
         PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
-        // nickname ; nickname
-        String[] info = in.readLine().split(";");
+        // nickname
         try {
-            User user = UserDAO.findByNickname(info[0]);
-            User contact = UserDAO.findByNickname(info[1]);
+            User user = UserDAO.findByIp(conn.getInetAddress().getHostAddress());
+            User contact = UserDAO.findByNickname(in.readLine());
             
             user.addContact(contact);
             

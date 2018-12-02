@@ -64,6 +64,8 @@ public class ThreadAreYouAlive extends Thread {
             return true;
         } catch (IOException ex) {
             ex.printStackTrace();
+        } finally {
+            CloseConnection.getInstance().close(in, out, conn);
         }
         return true;
     }

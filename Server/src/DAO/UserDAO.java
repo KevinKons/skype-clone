@@ -4,6 +4,7 @@ import model.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -61,7 +62,7 @@ public class UserDAO {
         }
     }
     
-    public static User findByNickname(String nickname) {
+    public static User findByNickname(String nickname) throws NoResultException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -70,6 +71,8 @@ public class UserDAO {
             query.setParameter("nickname", nickname);
             User user = (User) query.getSingleResult();
             return user;
+        } catch (NoResultException ex) {
+            throw new NoResultException();
         } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();

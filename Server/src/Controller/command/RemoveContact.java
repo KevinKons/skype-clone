@@ -17,7 +17,6 @@ public class RemoveContact implements Command {
 
     @Override
     public void execute(Socket conn, BufferedReader in) throws IOException {
-        System.out.println("entrei");
         PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
         // nickname
         try {
@@ -28,7 +27,6 @@ public class RemoveContact implements Command {
             user.removeContact(contact);
             
             UserDAO.editar(user);
-            UserDAO.editar(contact);
             
             System.out.println(user.getName() + " excluiu " + contact.getName() + " da sua lista de contatos.");
             out.println(1);
