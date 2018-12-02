@@ -26,8 +26,11 @@ public class MaintainOnlines extends Thread {
     public void run() {
         System.out.println("iniciando maintain online");
         while (true) {
+            System.out.println(".");
             if (!onlines.isEmpty()) {
+                System.out.println("Nao é mais vazio");
                 for (Map.Entry<String, String> pair : onlines.entrySet()) {
+                    System.out.println("iniciando threadAreYouAlive");
                     ThreadAreYouAlive threadAreYouAlive = new ThreadAreYouAlive(pair.getValue(), pair.getKey());
                     threadAreYouAlive.start();
                 }

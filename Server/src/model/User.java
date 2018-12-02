@@ -94,6 +94,11 @@ public class User implements Serializable {
     }
 
     public void removeContact(User contact) {
+        for(User c : contacts) {
+            if(c.getNickname().equalsIgnoreCase(contact.getNickname())) {
+                contact = c;
+            }
+        }
         this.contacts.remove(contact);
     }
 
