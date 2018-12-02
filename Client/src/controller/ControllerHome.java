@@ -5,11 +5,13 @@
  */
 package controller;
 
+import controller.chat.SendMessageToClient;
 import controller.contacts.AddContact;
 import controller.contacts.ControllerContacts;
 import controller.contacts.RemoveContact;
 import java.util.ArrayList;
 import java.util.List;
+import model.Chat;
 import model.User;
 
 /**
@@ -19,6 +21,8 @@ import model.User;
 public class ControllerHome implements Observed {
 
     private List<ObserverHome> observers = new ArrayList<>();
+    private User contactActive;
+    private SendMessageToClient sendMessageToClient;
 
     public void addContact(String nickname) {
         if (nickname != null) {
@@ -49,8 +53,12 @@ public class ControllerHome implements Observed {
 
     public void showContacts() {
         for (User contact : ManageControllers.getInstance().getUser().getContacts()) {
+            boolean ip = false;
+            if (contact.getIp() == null) {
+                ip = true;
+            }
             for (ObserverHome obs : observers) {
-                obs.showContact(contact.getNickname(), contact.getName(), contact.getStatus());
+                obs.showContact(contact.getNickname(), contact.getName(), contact.getStatus(), ip);
             }
         }
     }
@@ -59,9 +67,42 @@ public class ControllerHome implements Observed {
         ControllerContacts controllerContacts = new ControllerContacts();
         try {
             controllerContacts.executeStrategy(new RemoveContact(), nickname);
-            System.out.println("Removeu:" + nickname);
+            alert("Usuário: " + nickname + " removido da sua lista de contatos");
         } catch (Exception e) {
             alert(e.getMessage());
+        }
+    }
+
+    public void openChat(String nickname) {
+
+        String messages = "";
+
+        for (User contact : ManageControllers.getInstance().getUser().getContacts()) {
+            if (contact.getName().equalsIgnoreCase(nickname)) {
+                contactActive = contact;
+                if (ManageControllers.getInstance().getUser().getChats() != null) {
+                    for (Chat chat : ManageControllers.getInstance().getUser().getChats()) {
+                        messages += chat.getAllMessages();
+                    }
+                    showMessages(messages);
+                    System.out.println("Chat carregados: [" + messages + "].");
+                } else {
+                    Chat chat = new Chat(nickname, "");
+                    ManageControllers.getInstance().getUser().addChat(chat);
+                }
+            }
+        }
+
+    }
+
+    public void sendMessageToClient(String message) {
+        sendMessageToClient = new SendMessageToClient(message, contactActive.getIp(), contactActive.getNickname());
+        sendMessageToClient.start();
+    }
+
+    private void showMessages(String messages) {
+        for (ObserverHome obs : observers) {
+            obs.showMessages(messages);
         }
     }
 

@@ -19,19 +19,20 @@ import javax.swing.JPanel;
  * @author dougl
  */
 public class Home extends javax.swing.JFrame implements ObserverHome {
-
+    
     private ControllerHome controllerHome;
     private List<JPanel> contacts = new ArrayList<>();
-
+    
     public Home(String nickname) {
         controllerHome = new ControllerHome();
         controllerHome.addObserver(this);
-
+        
         initComponents();
         lblUsername.setText(nickname);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         controllerHome.showContacts();
+        editorPanelShowMessages.setEditable(false);
         this.setSize(973, 625);
     }
 
@@ -54,7 +55,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         painelScrollInside = new javax.swing.JPanel();
         panelMessage = new javax.swing.JPanel();
         scrollPanelMessages = new javax.swing.JScrollPane();
-        jEditorPane1 = new javax.swing.JEditorPane();
+        editorPanelShowMessages = new javax.swing.JEditorPane();
         jPanel1 = new javax.swing.JPanel();
         txtMessage = new javax.swing.JTextField();
         panelActions = new javax.swing.JPanel();
@@ -129,7 +130,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
 
         panelMessage.setBackground(new java.awt.Color(255, 255, 255));
 
-        scrollPanelMessages.setViewportView(jEditorPane1);
+        scrollPanelMessages.setViewportView(editorPanelShowMessages);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -139,6 +140,11 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
 
         btnSend.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSend.setText("Send");
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
 
         btnCall.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCall.setText("Call");
@@ -181,7 +187,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         panelMessageLayout.setHorizontalGroup(
             panelMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(scrollPanelMessages, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(scrollPanelMessages)
         );
         panelMessageLayout.setVerticalGroup(
             panelMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,12 +240,16 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         controllerHome.addContact(nickname);
     }//GEN-LAST:event_btnAddContactActionPerformed
 
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        controllerHome.sendMessageToClient(txtMessage.getText());
+    }//GEN-LAST:event_btnSendActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddContact;
     private javax.swing.JButton btnCall;
     private javax.swing.JButton btnSend;
+    private javax.swing.JEditorPane editorPanelShowMessages;
     private javax.swing.JButton jButton2;
-    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblUsername;
@@ -257,110 +267,116 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
     public void alert(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
-
+    
     @Override
     public void notifiesUserLogout(String ip) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void notifiesUserAdded(String nickname, String name, String status, String ip) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void changeToHome() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void notifiesUserLogin(String nickname, String ip) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
-    public void showContact(String nickname, String name, String status) {
-
+    public void showMessages(String messages) {
+        editorPanelShowMessages.setText(messages);
+    }
+    
+    @Override
+    public void showContact(String nickname, String name, String status, boolean ip) {
+        
         JPanel panelContact = new JPanel();
         JLabel lblName = new JLabel();
         JLabel lblStatus = new JLabel();
         JButton btnRemove = new JButton();
-        JButton btnTalk = new JButton();
-
+        JButton btnChat = new JButton();
+        
         panelContact.setBackground(new java.awt.Color(255, 255, 255));
-
+        
         lblName.setFont(new java.awt.Font("Tahoma", 1, 14));
         lblName.setText(name);
         lblStatus.setText(status);
-
-        btnTalk.setText("Talk");
+        
+        btnChat.setText("Chat");
         btnRemove.setText("Remove");
-
+        
+//        btnChat.setEnabled(ip);        
+        
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(panelContact);
         
         panelContact.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 225, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnRemove)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                            .addComponent(btnTalk, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap()))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 225, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(btnRemove)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                                                        .addComponent(btnChat, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 110, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(1, 1, 1)
-                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnTalk)
-                        .addComponent(btnRemove))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 110, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(btnChat)
+                                                .addComponent(btnRemove))
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
-
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(panelContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(panelContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(panelContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
+        
         pack();
-
+        
         btnRemove.addActionListener((java.awt.event.ActionEvent evt) -> {
             controllerHome.removeContact(nickname);
-            System.out.println("Apenas um print dizendo que irá remover o usuário: [" + name + "] que possui o nickname: [" + nickname + "]");
         });
-
-        btnTalk.addActionListener((java.awt.event.ActionEvent evt) -> {
-            System.out.println("Apenas um print dizendo que irá abrir o chat com o usuário: [" + name + "] que possui o nickname: [" + nickname + "]");
+        
+        btnChat.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controllerHome.openChat(nickname);
         });
         
         panelContact.setName("panelContact" + nickname);
         lblName.setName("lblName" + nickname);
         lblStatus.setName("lblStatus" + nickname);
         btnRemove.setName("btnRemove" + nickname);
-        btnTalk.setName("btnTalk" + nickname);
+        btnChat.setName("btnTalk" + nickname);
         panelContact.setVisible(true);
         panelContact.setSize(210, 105);
         
@@ -370,5 +386,5 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         painelScrollInside.add(panelContact);
         
     }
-
+    
 }

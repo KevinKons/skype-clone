@@ -12,6 +12,7 @@ public interface ObserverHome extends Observer {
     public void notifiesUserAdded(String nickname, String name, String status,
             String ip);
     public void notifiesUserLogin(String nickname, String ip);
-    public void showContact(String nickname, String name, String status);
+    public void showContact(String nickname, String name, String status, boolean ip);
+    public void showMessages(String messages);
     
 }

@@ -21,9 +21,9 @@ public class ChatController {
 
     }
 
-    public void sendMessage(Object content, String ip){
-        sendMessageToClient = new SendMessageToClient(content, ip);
-        sendMessageToClient.start();
+    public void sendMessage(String content, String ip){
+//        sendMessageToClient = new SendMessageToClient(content, ip);
+//        sendMessageToClient.start();
     }
 
 }

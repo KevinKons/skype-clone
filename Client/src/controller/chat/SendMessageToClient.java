@@ -6,13 +6,15 @@ import java.net.Socket;
 
 public class SendMessageToClient extends Thread {
 
-    private Object content;
+    private String contactNickname;
+    private String content;
     private String ip;
-    private final int PORT = 56000;
+    private final int PORT = 56003;
 
-    public SendMessageToClient(Object content, String ip) {
+    public SendMessageToClient(String content, String ip, String contactNickname) {
         this.content = content;
         this.ip = ip;
+        this.contactNickname = contactNickname;
     }
 
     @Override
@@ -21,7 +23,7 @@ public class SendMessageToClient extends Thread {
         try {
             Socket conn = new Socket(ip, PORT);
             PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
-            out.println(content);
+            out.println(contactNickname + ";" + content);
 
         } catch (IOException e) {
             e.printStackTrace();
