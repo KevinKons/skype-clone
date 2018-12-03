@@ -21,11 +21,15 @@ public class SendMessageToClient extends Thread {
     public void run() {
 
         try {
+            System.out.println("Abrindo Socket SendMessage");
+            System.out.println("IP: " + ip);
             Socket conn = new Socket(ip, PORT);
             PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
             out.println(contactNickname + ";" + content);
+            System.out.println("Enviou mensagem");
 
         } catch (IOException e) {
+            System.out.println("Caiu na excessão");
             e.printStackTrace();
         }
 

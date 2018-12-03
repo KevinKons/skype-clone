@@ -18,13 +18,14 @@ public class ListenMessages extends Thread {
     public void run() {
 
         try {
-            serverSocket = new ServerSocket(56002);
+            serverSocket = new ServerSocket(56003);
             serverSocket.setReuseAddress(true);
 
             while (true) {
 
                 System.out.println("Waiting connection");
                 Socket conn = serverSocket.accept();
+                System.out.println("Aceitou!");
 
                 try {
 

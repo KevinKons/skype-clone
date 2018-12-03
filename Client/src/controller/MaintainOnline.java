@@ -19,14 +19,18 @@ public class MaintainOnline extends Thread {
         try {
             PrintWriter out;
             BufferedReader in;
+            System.out.println("Acima do ServerSocket");
+            ServerSocket server = new ServerSocket(56001);
+            server.setReuseAddress(true);
             while (true) {
-                ServerSocket server = new ServerSocket(56001);
-                server.setReuseAddress(true);
+                
                 Socket conn = server.accept();
+
+                System.out.println("Aceitou a conexão com MaintainOnline");
 
                 out = new PrintWriter(conn.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                
+
                 String info = in.readLine();
                 if (info.equalsIgnoreCase("Are you alive?")) {
                     out.println("yes");
@@ -35,8 +39,7 @@ public class MaintainOnline extends Thread {
                 } else {
                     handleUserLogin(in.readLine().split(";"));
                 }
-                CloseConnection.getInstance().close(in, out, conn);
-                server.close();
+                conn.close();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -56,9 +59,10 @@ public class MaintainOnline extends Thread {
 
     private void handleUserLogin(String[] info) {
         User user = ManageControllers.getInstance().getUser();
-        for(User contact : user.getContacts()) {
-            if(contact.getNickname().equalsIgnoreCase(info[0]))
+        for (User contact : user.getContacts()) {
+            if (contact.getNickname().equalsIgnoreCase(info[0])) {
                 contact.setIp(info[1]);
+            }
         }
     }
 }

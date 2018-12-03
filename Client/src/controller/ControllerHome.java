@@ -78,7 +78,7 @@ public class ControllerHome implements Observed {
         String messages = "";
 
         for (User contact : ManageControllers.getInstance().getUser().getContacts()) {
-            if (contact.getName().equalsIgnoreCase(nickname)) {
+            if (contact.getNickname().equalsIgnoreCase(nickname)) {
                 contactActive = contact;
                 if (ManageControllers.getInstance().getUser().getChats() != null) {
                     for (Chat chat : ManageControllers.getInstance().getUser().getChats()) {
