@@ -19,16 +19,11 @@ public class MaintainOnline extends Thread {
         try {
             PrintWriter out;
             BufferedReader in;
-            System.out.println("Acima do ServerSocket");
             ServerSocket server = new ServerSocket(56001);
             server.setReuseAddress(true);
             while (true) {
-                
-                Socket conn = server.accept();
-                
-                System.out.println("maitain online foi chamado");
 
-                System.out.println("Aceitou a conexão com MaintainOnline");
+                Socket conn = server.accept();
 
                 out = new PrintWriter(conn.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(conn.getInputStream()));

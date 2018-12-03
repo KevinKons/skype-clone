@@ -1,13 +1,19 @@
 package model;
 
+import controller.Observed;
+import controller.ObserverHome;
+import controller.authentication.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Chat {
+public class Chat implements Observed {
 
+    private List<ObserverHome> observers = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
     private String nickname;
-
+    
+    public Chat(){}
+    
     public Chat(String nickname, String message) {
         this.nickname = nickname;
         this.messages.add(new Message(message));
@@ -39,5 +45,15 @@ public class Chat {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    @Override
+    public void addObserver(ObserverHome obs) {
+        observers.add(obs);
+    }
+
+    @Override
+    public void removeObserver(ObserverHome obs) {
+        observers.add(obs);
     }
 }

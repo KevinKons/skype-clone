@@ -10,9 +10,9 @@ public interface ObserverHome extends Observer {
 
     public void notifiesUserLogout(String ip);
     public void notifiesUserAdded(String nickname, String name, String status,
-            String ip);
+            boolean isOnline);
     public void notifiesUserLogin(String nickname, String ip);
-    public void showContact(String nickname, String name, String status, boolean ip);
     public void showMessages(String messages);
+    public void notifiesUserRemove(String nickname);
     
 }

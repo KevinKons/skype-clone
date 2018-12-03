@@ -6,27 +6,41 @@
 package view;
 
 import controller.ControllerHome;
+import controller.ManageControllers;
 import controller.ObserverHome;
+import java.awt.Component;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import model.Chat;
+import model.User;
 
 /**
  *
  * @author dougl
  */
 public class Home extends javax.swing.JFrame implements ObserverHome {
-    
+
     private ControllerHome controllerHome;
-    private List<JPanel> contacts = new ArrayList<>();
-    
+    private Chat chat;
+    private User user;
+    private Map<String, JPanel> contacts = new HashMap<>();
+
     public Home(String nickname) {
         controllerHome = new ControllerHome();
         controllerHome.addObserver(this);
-        
+
+        chat = new Chat();
+        chat.addObserver(this);
+
+        user = ManageControllers.getInstance().getUser();
+        user.addObserver(this);
+
         initComponents();
         lblUsername.setText(nickname);
         this.setLocationRelativeTo(null);
@@ -236,7 +250,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddContactActionPerformed
-        String nickname = JOptionPane.showInputDialog("Digite o nickname do usuário:");        
+        String nickname = JOptionPane.showInputDialog("Digite o nickname do usuário:");
         controllerHome.addContact(nickname);
     }//GEN-LAST:event_btnAddContactActionPerformed
 
@@ -267,54 +281,48 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
     public void alert(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
-    
+
     @Override
     public void notifiesUserLogout(String ip) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    @Override
-    public void notifiesUserAdded(String nickname, String name, String status, String ip) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+
     @Override
     public void changeToHome() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public void notifiesUserLogin(String nickname, String ip) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public void showMessages(String messages) {
         editorPanelShowMessages.setText(messages);
     }
-    
+
     @Override
-    public void showContact(String nickname, String name, String status, boolean ip) {
-        
+    public void notifiesUserAdded(String nickname, String name, String status, boolean isOnline) {
         JPanel panelContact = new JPanel();
         JLabel lblName = new JLabel();
         JLabel lblStatus = new JLabel();
         JButton btnRemove = new JButton();
         JButton btnChat = new JButton();
-        
+
         panelContact.setBackground(new java.awt.Color(255, 255, 255));
-        
+
         lblName.setFont(new java.awt.Font("Tahoma", 1, 14));
         lblName.setText(name);
         lblStatus.setText(status);
-        
+
         btnChat.setText("Chat");
         btnRemove.setText("Remove");
-        
-//        btnChat.setEnabled(ip);        
-        
+
+        btnChat.setEnabled(isOnline);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(panelContact);
-        
+
         panelContact.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,9 +354,8 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
                                                 .addComponent(btnRemove))
                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
-        
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -361,17 +368,17 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(panelContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        
+
         pack();
-        
+
         btnRemove.addActionListener((java.awt.event.ActionEvent evt) -> {
             controllerHome.removeContact(nickname);
         });
-        
+
         btnChat.addActionListener((java.awt.event.ActionEvent evt) -> {
             controllerHome.openChat(nickname);
         });
-        
+
         panelContact.setName("panelContact" + nickname);
         lblName.setName("lblName" + nickname);
         lblStatus.setName("lblStatus" + nickname);
@@ -379,12 +386,30 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         btnChat.setName("btnTalk" + nickname);
         panelContact.setVisible(true);
         panelContact.setSize(210, 105);
-        
+
         panelContact.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        
-        contacts.add(panelContact);
+
+        contacts.put(nickname, panelContact);
         painelScrollInside.add(panelContact);
-        
+
+        painelScrollInside.repaint();
+
     }
-    
+
+    @Override
+    public void notifiesUserRemove(String nickname) {
+
+        String key = "";
+
+        for (Map.Entry<String, JPanel> pair : contacts.entrySet()) {
+            if (pair.getKey().equalsIgnoreCase(nickname)) {
+                key = pair.getKey();
+            }
+        }
+        JPanel panel = contacts.get(key);
+        contacts.remove(key);
+        painelScrollInside.remove(panel);
+        painelScrollInside.repaint();
+    }
+
 }

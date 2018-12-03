@@ -90,7 +90,7 @@ public class User implements Observed {
         this.contacts.add(contact);
         for(ObserverHome o : this.observers) {
             o.notifiesUserAdded(contact.getNickname(), contact.getName(),
-                    contact.getStatus(), contact.getIp());
+                    contact.getStatus(), (contact.getIp() == null));
         }
     }
 

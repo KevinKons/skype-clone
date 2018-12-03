@@ -53,12 +53,12 @@ public class ControllerHome implements Observed {
 
     public void showContacts() {
         for (User contact : ManageControllers.getInstance().getUser().getContacts()) {
-            boolean ip = false;
+            boolean isOnline = false;
             if (contact.getIp() == null) {
-                ip = true;
+                isOnline = true;
             }
             for (ObserverHome obs : observers) {
-                obs.showContact(contact.getNickname(), contact.getName(), contact.getStatus(), ip);
+                obs.notifiesUserAdded(contact.getNickname(), contact.getName(), contact.getStatus(), isOnline);
             }
         }
     }
@@ -67,9 +67,13 @@ public class ControllerHome implements Observed {
         ControllerContacts controllerContacts = new ControllerContacts();
         try {
             controllerContacts.executeStrategy(new RemoveContact(), nickname);
-            alert("Usuário: " + nickname + " removido da sua lista de contatos");
+            for (ObserverHome obs : observers) {
+                System.out.println("Entrou na lista de observados do removeContact");
+                obs.notifiesUserRemove(nickname);
+            }
         } catch (Exception e) {
-            alert(e.getMessage());
+            e.printStackTrace();
+//            alert(e.getMessage());
         }
     }
 
