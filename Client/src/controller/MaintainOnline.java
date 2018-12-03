@@ -23,6 +23,8 @@ public class MaintainOnline extends Thread {
                 ServerSocket server = new ServerSocket(56001);
                 server.setReuseAddress(true);
                 Socket conn = server.accept();
+                
+                System.out.println("maitain online foi chamado");
 
                 out = new PrintWriter(conn.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -55,6 +57,7 @@ public class MaintainOnline extends Thread {
     }
 
     private void handleUserLogin(String[] info) {
+        System.out.println("alguem entrou");
         User user = ManageControllers.getInstance().getUser();
         for(User contact : user.getContacts()) {
             if(contact.getNickname().equalsIgnoreCase(info[0]))
