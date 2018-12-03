@@ -2,6 +2,8 @@ package Controller.mantainOnlines;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,7 +27,13 @@ public class MaintainOnlines extends Thread {
     @Override
     public void run() {
         while (true) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
             if (!onlines.isEmpty()) {
+                System.out.println("verificando onlines");
                 for (Map.Entry<String, String> pair : onlines.entrySet()) {
                     ThreadAreYouAlive threadAreYouAlive = 
                             new ThreadAreYouAlive(pair.getValue(), pair.getKey());

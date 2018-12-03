@@ -25,6 +25,8 @@ public class MaintainOnline extends Thread {
             while (true) {
                 
                 Socket conn = server.accept();
+                
+                System.out.println("maitain online foi chamado");
 
                 System.out.println("Aceitou a conexão com MaintainOnline");
 
@@ -58,6 +60,7 @@ public class MaintainOnline extends Thread {
     }
 
     private void handleUserLogin(String[] info) {
+        System.out.println("alguem entrou");
         User user = ManageControllers.getInstance().getUser();
         for (User contact : user.getContacts()) {
             if (contact.getNickname().equalsIgnoreCase(info[0])) {

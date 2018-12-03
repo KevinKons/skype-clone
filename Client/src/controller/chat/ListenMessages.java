@@ -25,7 +25,8 @@ public class ListenMessages extends Thread {
 
                 System.out.println("Waiting connection");
                 Socket conn = serverSocket.accept();
-                System.out.println("Aceitou!");
+
+                System.out.println("Aceitou");
 
                 try {
 

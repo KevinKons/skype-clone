@@ -41,7 +41,7 @@ public class User implements Observed {
                 o.notifiesUserLogout(ip);
         } else {
             for(ObserverHome o : this.observers) 
-                o.notifiesUserLogin(this.nickname ,ip);
+                o.notifiesUserLogin(this.nickname, ip);
         }
     }
 

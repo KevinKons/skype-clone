@@ -76,10 +76,11 @@ public class ControllerHome implements Observed {
     public void openChat(String nickname) {
 
         String messages = "";
-
+        
         for (User contact : ManageControllers.getInstance().getUser().getContacts()) {
             if (contact.getNickname().equalsIgnoreCase(nickname)) {
                 contactActive = contact;
+                System.out.println(contactActive);
                 if (ManageControllers.getInstance().getUser().getChats() != null) {
                     for (Chat chat : ManageControllers.getInstance().getUser().getChats()) {
                         messages += chat.getAllMessages();
