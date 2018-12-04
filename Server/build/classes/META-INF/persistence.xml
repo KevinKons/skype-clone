@@ -7,7 +7,7 @@
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/db-skype-clone"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="admin"/>
+      <property name="javax.persistence.jdbc.password" value="CEAVI2018"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <property name="eclipselink.logging.level" value="OFF"/>
     </properties>

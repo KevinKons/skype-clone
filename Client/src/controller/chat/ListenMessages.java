@@ -12,7 +12,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import model.Message;
 import model.User;
 
 public class ListenMessages extends Thread implements Observed {
