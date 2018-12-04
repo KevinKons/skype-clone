@@ -12,6 +12,7 @@ import controller.contacts.RemoveContact;
 import java.util.ArrayList;
 import java.util.List;
 import model.Chat;
+import model.Message;
 import model.User;
 
 /**
@@ -54,7 +55,8 @@ public class ControllerHome implements Observed {
     public void showContacts() {
         for (User contact : ManageControllers.getInstance().getUser().getContacts()) {
             for (ObserverHome obs : observers) {
-                obs.notifiesUserAdded(contact.getNickname(), contact.getName(), contact.getStatus(), contact.getIp());
+                obs.notifiesUserAdded(contact.getNickname(), contact.getName(),
+                        contact.getStatus(), contact.getIp());
             }
         }
     }
@@ -78,23 +80,27 @@ public class ControllerHome implements Observed {
         String messages = "";
         User user = ManageControllers.getInstance().getUser();
 
-        for (Chat chat : user.getChats()) {
-            if (chat.getNickname().equals(nickname)) {
-                for (Chat chat : user.getChats()) {
-                    messages += chat.getAllMessages();
+        if (user.getChats() != null) {
+            for (Chat chat : user.getChats()) {
+                if (chat.getNickname().equals(nickname)) {
+                    for (Message message : chat.getMessages()) {
+                        messages += message.getSender() + ": "
+                                + message.getContent() + "\n";
+                    }
+                    showMessages(messages);
+                    break;
                 }
-                showMessages(messages);
-                System.out.println("Chat carregados: [" + messages + "].");
-            } else {
-                Chat chat = new Chat(nickname, "");
-                ManageControllers.getInstance().getUser().addChat(chat);
             }
+        } else {
+            Chat chat = new Chat(nickname, "");
+            user.addChat(chat);
         }
 
     }
 
     public void sendMessageToClient(String message) {
-        sendMessageToClient = new SendMessageToClient(message, openChatContact.getIp(), openChatContact.getNickname());
+        sendMessageToClient = new SendMessageToClient(message,
+                openChatContact.getIp(), openChatContact.getNickname());
         sendMessageToClient.start();
     }
 

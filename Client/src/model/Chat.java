@@ -2,7 +2,6 @@ package model;
 
 import controller.Observed;
 import controller.ObserverHome;
-import controller.authentication.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
