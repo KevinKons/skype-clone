@@ -28,7 +28,9 @@ public class ListenCalls extends Thread implements Observed {
 
             while (true) {
                 Socket conn = server.accept();
-                if (in.readLine().equalsIgnoreCase("0")) {
+                in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String opc = in.readLine();
+                if (opc.equalsIgnoreCase("0")) {
                     in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     String nickname = in.readLine();
 
