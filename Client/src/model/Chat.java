@@ -16,7 +16,7 @@ public class Chat implements Observed {
     
     public Chat(String nickname, String message) {
         this.nickname = nickname;
-        this.messages.add(new Message(message));
+        this.messages.add(new Message(message, nickname));
     }
 
     public List<Message> getMessages() {
@@ -35,8 +35,8 @@ public class Chat implements Observed {
         this.messages = messages;
     }
 
-    public void addMenssage(String message) {
-        this.messages.add(new Message(message));
+    public void addMenssage(String message, String nickname) {
+        this.messages.add(new Message(message, nickname));
     }
 
     public String getNickname() {

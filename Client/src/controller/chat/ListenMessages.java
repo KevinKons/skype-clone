@@ -43,7 +43,7 @@ public class ListenMessages extends Thread implements Observed {
                     if (user.getChats() != null) {
                         for (Chat chat : user.getChats()) {
                             if (chat.getNickname().equals(nickname)) {
-                                chat.addMenssage(content);
+                                chat.addMenssage(content, nickname);
                             }
                         }
                     } else {
