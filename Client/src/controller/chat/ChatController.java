@@ -1,6 +1,5 @@
 package controller.chat;
 
-import controller.Call;
 import model.User;
 
 public class ChatController {
