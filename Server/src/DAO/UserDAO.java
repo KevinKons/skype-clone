@@ -22,7 +22,6 @@ public class UserDAO {
             em.persist(u);
             em.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
             em.getTransaction().rollback();
         } finally {
             em.close();

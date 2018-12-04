@@ -6,7 +6,9 @@
 package view;
 
 import controller.ControllerHome;
+import controller.ControllerProfile;
 import controller.MaintainOnline;
+import controller.ManageControllers;
 import controller.ObserverHome;
 import controller.chat.ListenMessages;
 import java.awt.Component;
@@ -25,6 +27,7 @@ import model.Chat;
 public class Home extends javax.swing.JFrame implements ObserverHome {
     
     private ControllerHome controllerHome;
+    private ControllerProfile controllerProfile = new ControllerProfile();
     private MaintainOnline maintainOnline;
     private ListenMessages listenMessages;
     private Chat chat;
@@ -33,6 +36,8 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
     public Home(String nickname) {
         controllerHome = new ControllerHome();
         controllerHome.addObserver(this);
+        
+        ManageControllers.getInstance().getUser().addObserver(this);
         
         chat = new Chat();
         chat.addObserver(this);
@@ -68,7 +73,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         lblUsername = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnAddContact = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnConfig = new javax.swing.JButton();
         scrollPanelContacts = new javax.swing.JScrollPane();
         painelScrollInside = new javax.swing.JPanel();
         panelMessage = new javax.swing.JPanel();
@@ -96,9 +101,14 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(204, 204, 204));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton2.setText("Configurações");
+        btnConfig.setBackground(new java.awt.Color(204, 204, 204));
+        btnConfig.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnConfig.setText("Configurações");
+        btnConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfigActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -108,7 +118,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAddContact)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -117,7 +127,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAddContact, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnConfig, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -264,12 +274,21 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         txtMessage.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
 
+    private void btnConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigActionPerformed
+
+        String name = JOptionPane.showInputDialog("Altere seu nome", ManageControllers.getInstance().getUser().getName());
+        String status = JOptionPane.showInputDialog("Altere seu status", ManageControllers.getInstance().getUser().getStatus());
+        
+        controllerProfile.update(name, status);
+        
+    }//GEN-LAST:event_btnConfigActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddContact;
     private javax.swing.JButton btnCall;
+    private javax.swing.JButton btnConfig;
     private javax.swing.JButton btnSend;
     private javax.swing.JEditorPane editorPanelShowMessages;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblUsername;
@@ -349,6 +368,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
     
     @Override
     public void notifiesUserAdded(String nickname, String name, String status, String ip) {
+        System.out.println("Estamos no inicio do metodo do notifiesUserAdded");
         JPanel panelContact = new JPanel();
         JLabel lblName = new JLabel();
         JLabel lblStatus = new JLabel();
@@ -434,6 +454,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         
         panelContact.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         
+        System.out.println("Adicionou: " + nickname);
         contacts.put(nickname, panelContact);
         painelScrollInside.add(panelContact);
         

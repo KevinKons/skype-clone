@@ -10,14 +10,14 @@ import model.User;
 
 public class ControllerProfile {
 
-    public void update(User user) {
+    public void update(String name, String status) {
 
         try {
-            //nickname; name; status
+            // name; status
             Socket conn = new Socket(Config.getInstance().getAddress(), Config.getInstance().getPort());
             PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
             out.println(2);
-            String message = user.getNickname() + ";" + user.getName() + ";" + user.getStatus();
+            String message = ManageControllers.getInstance().getUser().getNickname() + ";" + name + ";" + status;
             out.println(message);
 
         } catch (IOException ex) {
