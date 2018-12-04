@@ -362,8 +362,8 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         
         btnChat.setText("Chat");
         btnRemove.setText("Remove");
-        
-        btnChat.setEnabled(ip != null);
+                
+        btnChat.setEnabled(ip == null);
         
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(panelContact);
         
