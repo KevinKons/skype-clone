@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import model.Message;
 import model.User;
 
 public class ListenMessages extends Thread implements Observed {
@@ -39,18 +40,24 @@ public class ListenMessages extends Thread implements Observed {
                     String content = message[1];
                     User user = ManageControllers.getInstance().getUser();
                     
+                    String allMessages = "";
+                    
                     //Insert the message in Chat with the sender
                     if (user.getChats() != null) {
                         for (Chat chat : user.getChats()) {
                             if (chat.getNickname().equals(nickname)) {
                                 chat.addMenssage(content, nickname);
+                                for(Message m: chat.getMessages()){
+                                    allMessages += m.getContent() + "\n";
+                                }
                             }
                         }
                     } else {
                         Chat chat = new Chat(nickname, content);
                         user.addChat(chat);
                     }
-                    addMessage(content);
+                    
+                    showMessages(allMessages);
                 } catch (IOException e) {
                 }
             }
@@ -70,14 +77,10 @@ public class ListenMessages extends Thread implements Observed {
         observers.remove(obs);
     }
     
-    private void addMessage(String message){
+    private void showMessages(String message){
         for(ObserverHome obs: observers){
-            obs.addMessage(message);
+            obs.showMessages(message);
         }
-    }
-    
-    private void showMessages(String messages){
-        
     }
     
 }
