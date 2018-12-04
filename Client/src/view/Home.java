@@ -294,7 +294,52 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
 
     @Override
     public void notifiesUserLogin(String nickname, String ip) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        JPanel panel = null;
+        Component[] components;
+
+        for (Map.Entry<String, JPanel> pair : contacts.entrySet()) {
+
+            if (pair.getKey().equalsIgnoreCase(nickname)) {
+
+                panel = contacts.get(pair.getKey());
+                components = panel.getComponents();
+
+                for (int i = 0; i < components.length - 1; i++) {
+                    if (components[i].getName().equals("btnTalk" + nickname)) {
+                        System.out.println("Primeiramente, achou o botão para deixá-lo habilitado: " + nickname);
+                        pair.getValue().getComponents()[i].setEnabled(true);
+                    }
+                }
+
+            }
+        }
+
+        Component[] componentsPanelScrollInside = painelScrollInside.getComponents();
+
+        //percorrendo lista de paineis do PanelScrollInside
+        for (int i = 0; i < componentsPanelScrollInside.length - 1; i++) {
+
+            //Identifica o painel correspondente a ser alterado
+            if (componentsPanelScrollInside[i] == panel) {
+
+                //Vai na lista de componentes desse painel e identifica o botão
+                JPanel panelInside = (JPanel) componentsPanelScrollInside[i];
+
+                for (int k = 0; k < panelInside.getComponentCount() - 1; k++) {
+
+                    if (panelInside.getComponent(i).getName().equals("btnTalk" + nickname)) {
+                        System.out.println("Ativou o botão do usuário:" + nickname);
+                        painelScrollInside.getComponent(i).getComponentAt(k, k).setEnabled(true);
+                    }
+
+                }
+
+            }
+
+        }
+
+        painelScrollInside.repaint();
     }
 
     @Override
