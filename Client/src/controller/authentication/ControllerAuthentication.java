@@ -23,9 +23,8 @@ public class ControllerAuthentication implements Observed {
     private ManageControllers manageControllers = ManageControllers.getInstance();
     private List<Observer> observers = new ArrayList<>();
 
-    public ControllerAuthentication(String address, int port) {
+    public ControllerAuthentication(String address) {
         this.config.setAddress(address);
-        this.config.setPort(port);
     }
 
     public void signUp(String name, String nickname, String password, String repeatPassword) {

@@ -13,7 +13,7 @@ public class Config {
 
     private static Config instance;
     private String address;
-    private int port;
+    private final int port = 56000;
 
     private Config() {
     }
@@ -36,10 +36,6 @@ public class Config {
 
     public int getPort() {
         return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
     }
 
 }
