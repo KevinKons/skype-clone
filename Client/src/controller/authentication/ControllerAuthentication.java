@@ -1,8 +1,6 @@
 package controller.authentication;
 
-import controller.MaintainOnline;
 import controller.ManageControllers;
-import controller.contacts.ControllerContacts;
 import model.User;
 
 import java.io.BufferedReader;

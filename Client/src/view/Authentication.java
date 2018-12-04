@@ -251,7 +251,8 @@ public class Authentication extends javax.swing.JFrame implements Observer {
     public static void main(String args[]) {
 
 //        controller = new ControllerAuthentication(args[0], Integer.parseInt(args[1]));
-        controller = new ControllerAuthentication("192.168.1.10");
+//        controller = new ControllerAuthentication("192.168.1.10");
+        controller = new ControllerAuthentication(args[0]);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Authentication().setVisible(true);
