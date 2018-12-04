@@ -1,6 +1,5 @@
 package controller;
 
-import controller.chat.ChatController;
 import controller.chat.ListenCalls;
 import controller.chat.ListenMessages;
 import model.User;

@@ -8,11 +8,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 import model.User;
-import util.CloseConnection;
 
 public class MaintainOnline extends Thread {
 
-    //56000
+    //56001
     @Override
     public void run() {
 

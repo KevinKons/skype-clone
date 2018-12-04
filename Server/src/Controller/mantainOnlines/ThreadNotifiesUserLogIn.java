@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.User;
 import util.CloseConnection;
 
@@ -26,8 +24,8 @@ public class ThreadNotifiesUserLogIn extends Thread {
     
     @Override
     public void run() {
-        System.out.println("notificando usuário ficou online");
         MaintainOnlines maintainOnlines = MaintainOnlines.getInstance();
+        
         //percorrendo todos que estão online
         for (Map.Entry<String, String> pair : maintainOnlines.getOnlines().entrySet()) {
             User online = UserDAO.findByNickname(pair.getKey());
@@ -36,11 +34,11 @@ public class ThreadNotifiesUserLogIn extends Thread {
                 if (contact.getNickname().equalsIgnoreCase(nickname)) {
                     try {
                         //comunicando ao usuário que um de seus contatos agora está online
-                        Socket conn = new Socket(contact.getIp(), 56001);
+                        Socket conn = new Socket(online.getIp(), 56001);
                         conn.setSoTimeout(3000);
                         
                         PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
-                        out.println(1);
+                        out.println(2);
                         out.println(nickname + ";" + ip);
                         
                         CloseConnection.getInstance().closeOutAndConn(out, conn);

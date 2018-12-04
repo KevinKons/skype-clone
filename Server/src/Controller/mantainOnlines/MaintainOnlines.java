@@ -53,6 +53,7 @@ public class MaintainOnlines extends Thread {
     }
 
     public void addOnline(String nickname, String ip) {
+        System.out.println("entrei");
         ThreadNotifiesUserLogIn threadNotifiesUserLogIn = 
                 new ThreadNotifiesUserLogIn(nickname, ip);
         threadNotifiesUserLogIn.start();
