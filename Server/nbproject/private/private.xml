@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Server/src/Controller/mantainOnlines/MaintainOnlines.java</file>
+            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Server/src/DAO/UserDAO.java</file>
+            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Server/src/Controller/mantainOnlines/ThreadNotifiesUserLogIn.java</file>
+            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Server/src/Controller/command/SignIn.java</file>
+            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Server/src/Controller/Main.java</file>
+            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Server/src/Controller/mantainOnlines/ThreadAreYouAlive.java</file>
+            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Server/src/Controller/Server.java</file>
+            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Server/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/Kevin/Documents/Github/skype-clone/Server/src/model/User.java</file>
+        </group>
     </open-files>
 </project-private>
