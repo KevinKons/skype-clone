@@ -9,12 +9,13 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Kevin
  */
-public class ServerFrame extends javax.swing.JFrame {
+public class ServerFrame extends JFrame {
 
     public int port = 8888;
 

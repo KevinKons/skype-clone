@@ -3,17 +3,14 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
@@ -23,6 +20,7 @@ public class ClientFrame extends javax.swing.JFrame {
 
     public int portServer = 8888;
     public String add_server = "192.168.0.138";
+    
     public static AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;
         int sampleSizeInbits = 16;
@@ -31,7 +29,10 @@ public class ClientFrame extends javax.swing.JFrame {
         boolean bigEndian = false;
         return new AudioFormat(sampleRate, sampleSizeInbits, channel, signed, bigEndian);
     }
+
     TargetDataLine audioIn;
+    public SourceDataLine audioOut;
+
     public ClientFrame() {
         initComponents();
     }
@@ -98,7 +99,10 @@ public class ClientFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_startActionPerformed
-        initAudio();
+        initAudioIn();
+        initAudioOut();
+        initTransmission();
+        initPlayer();
     }//GEN-LAST:event_btn_startActionPerformed
 
     private void btn_stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_stopActionPerformed
@@ -107,17 +111,29 @@ public class ClientFrame extends javax.swing.JFrame {
         btn_stop.setEnabled(false);
     }//GEN-LAST:event_btn_stopActionPerformed
 
-    public void initAudio() {
+    public void initAudioIn() {
         try {
             AudioFormat format = getAudioFormat();
             DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
-            if(!AudioSystem.isLineSupported(info)) {
+            if (!AudioSystem.isLineSupported(info)) {
                 System.out.println("not suport");
                 System.exit(0);
             }
             audioIn = (TargetDataLine) AudioSystem.getLine(info);
             audioIn.open(format);
             audioIn.start();
+        } catch (LineUnavailableException ex) {
+            ex.printStackTrace();
+        }
+    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_start;
+    private javax.swing.JButton btn_stop;
+    private javax.swing.JLabel jLabel1;
+    // End of variables declaration//GEN-END:variables
+
+    private void initTransmission() {
+        try {
             RecorderThread recorderThread = new RecorderThread();
             InetAddress inet = InetAddress.getByName(add_server);
             recorderThread.audioIn = audioIn;
@@ -128,14 +144,36 @@ public class ClientFrame extends javax.swing.JFrame {
             recorderThread.start();
             btn_start.setEnabled(false);
             btn_stop.setEnabled(true);
-            
-        } catch (LineUnavailableException | UnknownHostException | SocketException ex) {
-            ex.printStackTrace();
+        } catch (UnknownHostException | SocketException ex) {
+            Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_start;
-    private javax.swing.JButton btn_stop;
-    private javax.swing.JLabel jLabel1;
-    // End of variables declaration//GEN-END:variables
+
+    private void initAudioOut() {
+        try {
+            AudioFormat format = getAudioFormat();
+            DataLine.Info info_out = new DataLine.Info(SourceDataLine.class, format);
+            if (!AudioSystem.isLineSupported(info_out)) {
+                System.out.println("not supported");
+                System.exit(0);
+            }
+            audioOut = (SourceDataLine) AudioSystem.getLine(info_out);
+            audioOut.open(format);
+            audioOut.start();
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void initPlayer() {
+        try {
+            PlayerThread thread = new PlayerThread();
+            thread.din = new DatagramSocket(8888);
+            thread.audioOut = audioOut;
+            ClientVoice.calling = true;
+            thread.start();
+        } catch (SocketException ex) {
+            Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

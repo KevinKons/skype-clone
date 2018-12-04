@@ -1,5 +1,3 @@
-package servidor;
-
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -23,7 +21,7 @@ public class PlayerThread extends Thread {
     public void run() {
         int i = 0;
         DatagramPacket incomming = new DatagramPacket(buffer, buffer.length);
-        while(Servidor.calling) {
+        while(ClientVoice.calling) {
             try {
                 din.receive(incomming);
                 buffer = incomming.getData();
