@@ -22,7 +22,7 @@ import model.User;
 public class ControllerHome implements Observed {
 
     private List<ObserverHome> observers = new ArrayList<>();
-    private User openChatContact;
+    private String nicknameContact;
     private SendMessageToClient sendMessageToClient;
 
     public void addContact(String nickname) {
@@ -76,6 +76,8 @@ public class ControllerHome implements Observed {
     }
 
     public void openChat(String nickname) {
+        
+        this.nicknameContact = nickname;
 
         String messages = "";
         User user = ManageControllers.getInstance().getUser();
@@ -87,7 +89,8 @@ public class ControllerHome implements Observed {
                         messages += message.getSender() + ": "
                                 + message.getContent() + "\n";
                     }
-                    showMessages(messages);
+                    
+                    showMessage(messages);
                     break;
                 }
             }
@@ -99,15 +102,15 @@ public class ControllerHome implements Observed {
     }
 
     public void sendMessageToClient(String message) {
-        sendMessageToClient = new SendMessageToClient(message,
-                openChatContact.getIp(), openChatContact.getNickname());
+        sendMessageToClient = new SendMessageToClient(message, nicknameContact);
         sendMessageToClient.start();
     }
 
-    private void showMessages(String messages) {
+    private void showMessage(String messages) {
         for (ObserverHome obs : observers) {
-            obs.showMessages(messages);
+            obs.addMessage(messages);
         }
     }
+
 
 }
