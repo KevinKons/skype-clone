@@ -441,7 +441,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         });
 
         btnChat.addActionListener((java.awt.event.ActionEvent evt) -> {
-
+            editorPanelShowMessages.setText("");            
             controllerHome.openChat(nickname);
         });
 

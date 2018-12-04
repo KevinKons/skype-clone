@@ -8,6 +8,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.User;
 
 public class MaintainOnline extends Thread implements Observed {
@@ -35,6 +37,7 @@ public class MaintainOnline extends Thread implements Observed {
                 if (info.equalsIgnoreCase("Are you alive?")) {
                     out.println("yes");
                 } else if (info.equalsIgnoreCase("1")) {
+                    Thread.sleep(1);
                     handleUserLogout(in.readLine());
                 } else {
                     handleUserLogin(in.readLine().split(";"));
@@ -43,6 +46,8 @@ public class MaintainOnline extends Thread implements Observed {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MaintainOnline.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
