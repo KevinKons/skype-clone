@@ -20,7 +20,7 @@ public class ClientFrame extends javax.swing.JFrame {
 
     public int portServer = 8888;
     public String add_server = "192.168.0.108";
-    
+
     public static AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;
         int sampleSizeInbits = 16;
@@ -99,6 +99,7 @@ public class ClientFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_startActionPerformed
+        initWaitForCall();
         initAudioIn();
         initAudioOut();
         initTransmission();
@@ -110,6 +111,13 @@ public class ClientFrame extends javax.swing.JFrame {
         btn_start.setEnabled(true);
         btn_stop.setEnabled(false);
     }//GEN-LAST:event_btn_stopActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_start;
+    private javax.swing.JButton btn_stop;
+    private javax.swing.JLabel jLabel1;
+    // End of variables declaration//GEN-END:variables
 
     public void initAudioIn() {
         try {
@@ -126,11 +134,6 @@ public class ClientFrame extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_start;
-    private javax.swing.JButton btn_stop;
-    private javax.swing.JLabel jLabel1;
-    // End of variables declaration//GEN-END:variables
 
     private void initTransmission() {
         try {
@@ -138,6 +141,8 @@ public class ClientFrame extends javax.swing.JFrame {
             InetAddress inet = InetAddress.getByName(add_server);
             recorderThread.audioIn = audioIn;
             recorderThread.dout = new DatagramSocket();
+            System.out.println("iniciou transmissão");
+            
             recorderThread.serverIp = inet;
             recorderThread.serverPort = portServer;
             ClientVoice.calling = true;
@@ -175,5 +180,9 @@ public class ClientFrame extends javax.swing.JFrame {
         } catch (SocketException ex) {
             Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void initWaitForCall() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

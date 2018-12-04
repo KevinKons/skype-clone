@@ -62,7 +62,7 @@ public class ThreadAreYouAlive extends Thread {
         } catch (SocketTimeoutException ex) {
             return true;
         } catch (IOException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         } finally {
             CloseConnection.getInstance().close(in, out, conn);
         }
@@ -78,6 +78,7 @@ public class ThreadAreYouAlive extends Thread {
 
         User OfflineUser = UserDAO.findByNickname(nickname);
         OfflineUser.setIp(null);
+        UserDAO.editar(OfflineUser);
 
         //percorrendo todos que estão online
         for (Map.Entry<String, String> pair : maintainOnlines.getOnlines().entrySet()) {
