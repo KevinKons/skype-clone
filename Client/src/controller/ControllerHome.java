@@ -5,12 +5,27 @@
  */
 package controller;
 
+import controller.chat.Call;
 import controller.chat.SendMessage;
 import controller.contacts.AddContact;
 import controller.contacts.ControllerContacts;
+import controller.contacts.RecorderThread;
 import controller.contacts.RemoveContact;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.TargetDataLine;
 import model.Chat;
 import model.Message;
 import model.User;
@@ -24,6 +39,7 @@ public class ControllerHome implements Observed {
     private List<ObserverHome> observers = new ArrayList<>();
     private String nicknameContact;
     private SendMessage sendMessageToClient;
+    private Call call;
 
     public void addContact(String nickname) {
         if (nickname != null) {
@@ -106,12 +122,57 @@ public class ControllerHome implements Observed {
         sendMessageToClient.start();
     }
     
-//    public void call
+    public void call() {
+        Socket conn = null;
+        PrintWriter out = null;
+        
+        String ip = "";
+        User user = ManageControllers.getInstance().getUser();
+        
+        for(User contact : user.getContacts()) {
+            if(contact.getNickname().equals(nicknameContact)) 
+                ip = contact.getIp();
+        }
+        
+        try {
+           conn = new Socket(ip, 56004);
+           out = new PrintWriter(conn.getOutputStream(), true);
+           
+           out.println(0);
+           out.println(user.getNickname());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+    }
 
     private void showMessage(String messages) {
         for (ObserverHome obs : observers) {
             obs.addMessage(messages);
         }
+    }
+    
+    public void acceptCall(String nickname, String ip) {
+        Socket conn = null;
+        PrintWriter out = null;
+        BufferedReader in = null;
+        
+        try {
+           conn = new Socket(ip, 56004);
+           out = new PrintWriter(conn.getOutputStream(), true);
+           in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+           
+           out.println(1);
+           out.println(nickname + ";" + ip);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+        
+    }
+
+    public void initCall(TargetDataLine audioIn, SourceDataLine audioOut, String ip) {
+        call = new Call(audioIn, audioOut, ip);
+        call.initRecorder();
+        call.initPlayer();
     }
 
 

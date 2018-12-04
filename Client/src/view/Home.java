@@ -10,10 +10,19 @@ import controller.ControllerProfile;
 import controller.MaintainOnline;
 import controller.ManageControllers;
 import controller.ObserverHome;
+import controller.chat.ListenCalls;
 import controller.chat.ListenMessages;
 import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.TargetDataLine;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,13 +39,15 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
     private ControllerProfile controllerProfile = new ControllerProfile();
     private MaintainOnline maintainOnline;
     private ListenMessages listenMessages;
+    private ListenCalls listenCalls;
     private Chat chat;
     private Map<String, JPanel> contacts = new HashMap<>();
 
     public Home(String nickname) {
+
         controllerHome = new ControllerHome();
         controllerHome.addObserver(this);
-        
+
         ManageControllers.getInstance().getUser().addObserver(this);
 
         chat = new Chat();
@@ -49,6 +60,10 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         listenMessages = new ListenMessages();
         listenMessages.addObserver(this);
         listenMessages.start();
+
+        listenCalls = new ListenCalls();
+        listenCalls.addObserver(this);
+        listenCalls.start();
 
         initComponents();
         lblUsername.setText(nickname);
@@ -283,14 +298,14 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
 
         String name = JOptionPane.showInputDialog("Altere seu nome", ManageControllers.getInstance().getUser().getName());
         String status = JOptionPane.showInputDialog("Altere seu status", ManageControllers.getInstance().getUser().getStatus());
-        
+
         controllerProfile.update(name, status);
-        
+
     }//GEN-LAST:event_btnConfigActionPerformed
 
     private void btnCallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCallActionPerformed
-        System.out.println("d");
-        
+        controllerHome.call();
+
     }//GEN-LAST:event_btnCallActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -450,7 +465,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         });
 
         btnChat.addActionListener((java.awt.event.ActionEvent evt) -> {
-            editorPanelShowMessages.setText("");            
+            editorPanelShowMessages.setText("");
             controllerHome.openChat(nickname);
         });
 
@@ -492,6 +507,81 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         editorPanelShowMessages.setText(editorPanelShowMessages.getText() + message);
     }
 
+    public AudioFormat getAudioFormat() {
+        float sampleRate = 8000.0F;
+        int sampleSizeInbits = 16;
+        int channel = 2;
+        boolean signed = true;
+        boolean bigEndian = false;
+        return new AudioFormat(sampleRate, sampleSizeInbits, channel, signed, bigEndian);
+    }
+
+    TargetDataLine audioIn;
+    SourceDataLine audioOut;
+
+    @Override
+    public void notifiesUserIsCalling(String nickname, String ip) {
+        int opc = JOptionPane.showConfirmDialog(panelActions, nickname + " está ligando,"
+                + " deseja atender?", "ligação", 2);
+
+        if (opc == 0) {
+            controllerHome.acceptCall(nickname, ip);
+            initCall(ip);
+        } else {
+
+        }
+    }
+
+    @Override
+    public void notifiesAcceptedCall(String nickname, String ip) {
+        JOptionPane.showMessageDialog(panelActions, nickname
+                + " aceitou sua ligaçãoo");
+        initCall(ip);
+        
+    }
+
+    private void initCall(String ip) {
+        initAudioIn();
+        initAudioOut();
+        initTransmission(ip);
+    }
+    
+    public void initAudioIn() {
+        try {
+            AudioFormat format = getAudioFormat();
+            DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
+            if (!AudioSystem.isLineSupported(info)) {
+                System.out.println("not suport");
+                System.exit(0);
+            }
+            audioIn = (TargetDataLine) AudioSystem.getLine(info);
+            audioIn.open(format);
+            audioIn.start();
+        } catch (LineUnavailableException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void initTransmission(String ip) {
+        controllerHome.initCall(audioIn, audioOut, ip);
+    }
+
+    private void initAudioOut() {
+        try {
+            AudioFormat format = getAudioFormat();
+            DataLine.Info info_out = new DataLine.Info(SourceDataLine.class, format);
+            if (!AudioSystem.isLineSupported(info_out)) {
+                System.out.println("not supported");
+                System.exit(0);
+            }
+            audioOut = (SourceDataLine) AudioSystem.getLine(info_out);
+            audioOut.open(format);
+            audioOut.start();
+        } catch (LineUnavailableException ex) {
+            ex.printStackTrace();
+        }
+
+    }
     @Override
     public void clearTextArea() {
         editorPanelShowMessages.setText("");
