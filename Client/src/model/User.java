@@ -103,6 +103,9 @@ public class User implements Observed {
     }
 
     public void addChat(Chat chat) {
+        for(ObserverHome obs: observers){
+            obs.clearTextArea();
+        }
         this.chats.add(chat);
     }
 

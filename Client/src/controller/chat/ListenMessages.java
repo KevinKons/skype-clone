@@ -40,15 +40,23 @@ public class ListenMessages extends Thread implements Observed {
                     String nickname = message[0];
                     String content = message[1];
                     User user = ManageControllers.getInstance().getUser();
-
+                    
                     //Insert the message in Chat with the sender
                     if (user.getChats() != null) {
-                        for (Chat chat : user.getChats()) {
-                            if (chat.getNickname().equals(nickname)) {
-                                chat.addMenssage(content, nickname);
+                        Chat chat = null;
+                        for (Chat c : user.getChats()) {
+                            if (c.getNickname().equals(nickname)) {
+                                chat = c;
+                                c.addMenssage(content, nickname);
                                 break;
                             }
                         }
+                        
+                        if(chat == null){
+                            chat = new Chat(nickname, content);
+                            user.addChat(chat);
+                        }
+                        
                     } else {
                         Chat chat = new Chat(nickname, content);
                         user.addChat(chat);

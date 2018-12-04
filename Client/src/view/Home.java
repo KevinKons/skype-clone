@@ -493,4 +493,9 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         editorPanelShowMessages.setText(editorPanelShowMessages.getText() + message);
     }
 
+    @Override
+    public void clearTextArea() {
+        editorPanelShowMessages.setText("");
+    }
+
 }

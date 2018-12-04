@@ -15,5 +15,6 @@ public interface ObserverHome extends Observer {
     public void showMessages(String messages);
     public void notifiesUserRemove(String nickname);
     public void addMessage(String message);
+    public void clearTextArea();
 
 }
