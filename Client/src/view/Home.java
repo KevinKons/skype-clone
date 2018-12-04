@@ -261,6 +261,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         controllerHome.sendMessageToClient(txtMessage.getText());
         editorPanelShowMessages.setText(editorPanelShowMessages.getText() + "\n" + txtMessage.getText());
+        txtMessage.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -363,7 +364,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         btnChat.setText("Chat");
         btnRemove.setText("Remove");
                 
-        btnChat.setEnabled(ip == null);
+        btnChat.setEnabled(!ip.equalsIgnoreCase("null"));
         
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(panelContact);
         

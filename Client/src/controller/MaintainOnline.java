@@ -60,7 +60,7 @@ public class MaintainOnline extends Thread implements Observed {
     }
 
     private void handleUserLogin(String[] info) {
-        System.out.println("alguem entrou");
+        System.out.println("Este nickname: " + info[0] + " ficou online");
         User user = ManageControllers.getInstance().getUser();
         for (User contact : user.getContacts()) {
             if (contact.getNickname().equalsIgnoreCase(info[0])) {
