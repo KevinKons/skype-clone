@@ -6,11 +6,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import model.User;
 import util.CloseConnection;
 
-public class MaintainOnline extends Thread {
+public class MaintainOnline extends Thread implements Observed {
+
+    private List<ObserverHome> observers = new ArrayList<>();
 
     //56000
     @Override
@@ -29,6 +32,7 @@ public class MaintainOnline extends Thread {
                 in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
                 String info = in.readLine();
+//                System.out.println("INFO: " + info);
                 if (info.equalsIgnoreCase("Are you alive?")) {
                     out.println("yes");
                 } else if (info.equalsIgnoreCase("1")) {
@@ -44,14 +48,16 @@ public class MaintainOnline extends Thread {
 
     }
 
-    private void handleUserLogout(String ip) {
-        List<User> contacts = ManageControllers.getInstance().getUser().getContacts();
+    private void handleUserLogout(String nickname) {
+        List<User> contacts = ManageControllers.getInstance().getUser().getContacts();        
         for (int i = 0; i < contacts.size(); i++) {
             User contact = contacts.get(i);
-            if (contact.getIp().equalsIgnoreCase(ip)) {
+            if (contact.getNickname().equalsIgnoreCase(nickname)) {
                 contact.setIp(null);
             }
         }
+        System.out.println("Este nickname: " + nickname + " ficou offline");
+        notifiesLogout(nickname);
     }
 
     private void handleUserLogin(String[] info) {
@@ -62,5 +68,29 @@ public class MaintainOnline extends Thread {
                 contact.setIp(info[1]);
             }
         }
+        notifieUserLogin(info[0]);
     }
+
+    @Override
+    public void addObserver(ObserverHome obs) {
+        observers.add(obs);
+    }
+
+    @Override
+    public void removeObserver(ObserverHome obs) {
+        observers.remove(obs);
+    }
+
+    private void notifieUserLogin(String nickname) {
+        for (ObserverHome obs : observers) {
+            obs.notifiesUserLogin(nickname, "");
+        }
+    }
+
+    private void notifiesLogout(String nickname) {
+        for (ObserverHome obs : observers) {
+            obs.notifiesUserLogout(nickname);
+        }
+    }
+
 }

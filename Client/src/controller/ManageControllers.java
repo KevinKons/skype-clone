@@ -1,8 +1,6 @@
 package controller;
 
-import controller.chat.ChatController;
 import controller.chat.ListenCalls;
-import controller.chat.ListenMessages;
 import model.User;
 
 public class ManageControllers {
@@ -22,12 +20,6 @@ public class ManageControllers {
     }
 
     public void initControllers() {
-
-        //Controller
-//        ChatController chatController = new ChatController(user);
-
-        ListenMessages listenMessages = new ListenMessages();
-        listenMessages.start();
         
         //Listeners
         ListenCalls listenCalls = new ListenCalls();

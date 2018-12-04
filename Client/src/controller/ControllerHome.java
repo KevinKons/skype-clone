@@ -53,12 +53,8 @@ public class ControllerHome implements Observed {
 
     public void showContacts() {
         for (User contact : ManageControllers.getInstance().getUser().getContacts()) {
-            boolean isOnline = false;
-            if (contact.getIp() == null) {
-                isOnline = true;
-            }
             for (ObserverHome obs : observers) {
-                obs.notifiesUserAdded(contact.getNickname(), contact.getName(), contact.getStatus(), isOnline);
+                obs.notifiesUserAdded(contact.getNickname(), contact.getName(), contact.getStatus(), contact.getIp());
             }
         }
     }

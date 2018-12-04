@@ -15,7 +15,7 @@ public class User implements Observed {
     private String status;
     private List<Chat> chats = new ArrayList<>();
     private List<User> contacts = new ArrayList<>();
-    
+
     private List<ObserverHome> observers = new ArrayList<>();
 
     public User() {
@@ -27,22 +27,15 @@ public class User implements Observed {
         this.password = password;
         this.status = status;
     }
-    
+
     public User(String nickname, String name, String status) {
         this.nickname = nickname;
         this.name = name;
         this.status = status;
     }
-    
+
     public void setIp(String ip) {
         this.ip = ip;
-        if(ip == null) {
-            for(ObserverHome o : this.observers) 
-                o.notifiesUserLogout(ip);
-        } else {
-            for(ObserverHome o : this.observers) 
-                o.notifiesUserLogin(this.nickname, ip);
-        }
     }
 
     public String getIp() {
@@ -65,7 +58,6 @@ public class User implements Observed {
         this.nickname = nickname;
     }
 
-
     public String getStatus() {
         return status;
     }
@@ -81,14 +73,14 @@ public class User implements Observed {
     public void setContacts(List<User> contacts) {
         this.contacts = contacts;
     }
-    
-    public void setContact(User contact){
+
+    public void setContact(User contact) {
         this.contacts.add(contact);
     }
 
     public void addContact(User contact) {
         this.contacts.add(contact);
-        for(ObserverHome o : this.observers) {
+        for (ObserverHome o : this.observers) {
             o.notifiesUserAdded(contact.getNickname(), contact.getName(),
                     contact.getStatus(), (contact.getIp() == null));
         }
@@ -128,6 +120,5 @@ public class User implements Observed {
     public String toString() {
         return "User{" + "ip=" + ip + ", name=" + name + ", nickname=" + nickname + ", password=" + password + ", status=" + status + ", chats=" + chats + ", contacts=" + contacts + ", observers=" + observers + '}';
     }
-    
-    
+
 }
