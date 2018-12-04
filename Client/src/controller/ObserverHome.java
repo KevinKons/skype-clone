@@ -18,5 +18,6 @@ public interface ObserverHome extends Observer {
     public void notifiesUserIsCalling(String nickname, String ip);
 
     public void notifiesAcceptedCall(String nickname, String ip);
+    public void clearTextArea();
 
 }

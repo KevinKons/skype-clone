@@ -392,8 +392,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
     }
 
     @Override
-    public void notifiesUserAdded(String nickname, String name, String status, String ip) {
-        System.out.println("Estamos no inicio do metodo do notifiesUserAdded");
+    public void notifiesUserAdded(String nickname, String name, String status, String ip) {        
         JPanel panelContact = new JPanel();
         JLabel lblName = new JLabel();
         JLabel lblStatus = new JLabel();
@@ -581,6 +580,11 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         } catch (LineUnavailableException ex) {
             ex.printStackTrace();
         }
+
+    }
+    @Override
+    public void clearTextArea() {
+        editorPanelShowMessages.setText("");
     }
 
 }
