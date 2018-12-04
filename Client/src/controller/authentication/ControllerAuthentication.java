@@ -20,7 +20,6 @@ public class ControllerAuthentication implements Observed {
     private Socket conn;
     private Config config = Config.getInstance();
 
-    private MaintainOnline maintainOnline = new MaintainOnline();
     private ManageControllers manageControllers = ManageControllers.getInstance();
     private List<Observer> observers = new ArrayList<>();
 
@@ -105,7 +104,6 @@ public class ControllerAuthentication implements Observed {
                 //inicia os serviços
                 manageControllers.setUser(user);
                 manageControllers.initControllers();
-                maintainOnline.start();
 
                 changeForHome();
 

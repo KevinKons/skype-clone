@@ -1,6 +1,8 @@
 package controller.chat;
 
 import controller.ManageControllers;
+import controller.Observed;
+import controller.ObserverHome;
 import model.Chat;
 
 import java.io.BufferedReader;
@@ -8,11 +10,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ListenMessages extends Thread {
+public class ListenMessages extends Thread implements Observed {
 
     //56002
     private ServerSocket serverSocket;
+    private List<ObserverHome> observers = new ArrayList<>();
 
     @Override
     public void run() {
@@ -42,6 +47,7 @@ public class ListenMessages extends Thread {
                         Chat chat = new Chat(nickname, content);
                         ManageControllers.getInstance().getUser().addChat(chat);
                     }
+                    addMessage(content);
                 } catch (IOException e) {
                 }
             }
@@ -50,4 +56,21 @@ public class ListenMessages extends Thread {
         }
 
     }
+
+    @Override
+    public void addObserver(ObserverHome obs) {
+        observers.add(obs);
+    }
+
+    @Override
+    public void removeObserver(ObserverHome obs) {
+        observers.remove(obs);
+    }
+    
+    private void addMessage(String message){
+        for(ObserverHome obs: observers){
+            obs.addMessage(message);
+        }
+    }
+    
 }
