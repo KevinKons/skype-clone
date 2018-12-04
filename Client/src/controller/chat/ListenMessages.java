@@ -39,16 +39,17 @@ public class ListenMessages extends Thread implements Observed {
                     String nickname = message[0];
                     String content = message[1];
                     User user = ManageControllers.getInstance().getUser();
-                    
+
                     String allMessages = "";
-                    
+
                     //Insert the message in Chat with the sender
                     if (user.getChats() != null) {
                         for (Chat chat : user.getChats()) {
                             if (chat.getNickname().equals(nickname)) {
                                 chat.addMenssage(content, nickname);
-                                for(Message m: chat.getMessages()){
-                                    allMessages += m.getContent() + "\n";
+                                for (Message m : chat.getMessages()) {
+                                    allMessages += m.getSender() + " : "
+                                            + m.getContent() + "\n";
                                 }
                             }
                         }
@@ -56,7 +57,7 @@ public class ListenMessages extends Thread implements Observed {
                         Chat chat = new Chat(nickname, content);
                         user.addChat(chat);
                     }
-                    
+
                     showMessages(allMessages);
                 } catch (IOException e) {
                 }
@@ -76,11 +77,11 @@ public class ListenMessages extends Thread implements Observed {
     public void removeObserver(ObserverHome obs) {
         observers.remove(obs);
     }
-    
-    private void showMessages(String message){
-        for(ObserverHome obs: observers){
+
+    private void showMessages(String message) {
+        for (ObserverHome obs : observers) {
             obs.showMessages(message);
         }
     }
-    
+
 }
