@@ -270,7 +270,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         controllerHome.sendMessageToClient(txtMessage.getText());
-        editorPanelShowMessages.setText(editorPanelShowMessages.getText() + "\n" + txtMessage.getText());
+        editorPanelShowMessages.setText(editorPanelShowMessages.getText() + "\n" + ManageControllers.getInstance().getUser().getNickname() + ": " + txtMessage.getText() + "\n");
         txtMessage.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
 
