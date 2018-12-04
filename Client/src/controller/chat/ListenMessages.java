@@ -26,6 +26,7 @@ public class ListenMessages extends Thread implements Observed {
         try {
             serverSocket = new ServerSocket(56003);
             serverSocket.setReuseAddress(true);
+            
             while (true) {
                 System.out.println("Waiting connection");
                 Socket conn = serverSocket.accept();
@@ -51,6 +52,7 @@ public class ListenMessages extends Thread implements Observed {
                                     allMessages += m.getSender() + " : "
                                             + m.getContent() + "\n";
                                 }
+                                break;
                             }
                         }
                     } else {
