@@ -5,7 +5,7 @@ import model.User;
 
 public class ChatController {
 
-    private SendMessageToClient sendMessageToClient;
+    private SendMessage sendMessageToClient;
     private Call call;
     private User contact;
 

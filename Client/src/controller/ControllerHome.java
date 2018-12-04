@@ -5,7 +5,7 @@
  */
 package controller;
 
-import controller.chat.SendMessageToClient;
+import controller.chat.SendMessage;
 import controller.contacts.AddContact;
 import controller.contacts.ControllerContacts;
 import controller.contacts.RemoveContact;
@@ -23,7 +23,7 @@ public class ControllerHome implements Observed {
 
     private List<ObserverHome> observers = new ArrayList<>();
     private String nicknameContact;
-    private SendMessageToClient sendMessageToClient;
+    private SendMessage sendMessageToClient;
 
     public void addContact(String nickname) {
         if (nickname != null) {
@@ -101,10 +101,12 @@ public class ControllerHome implements Observed {
 
     }
 
-    public void sendMessageToClient(String message) {
-        sendMessageToClient = new SendMessageToClient(message, nicknameContact);
+    public void sendMessage(String message) {
+        sendMessageToClient = new SendMessage(message, nicknameContact);
         sendMessageToClient.start();
     }
+    
+//    public void call
 
     private void showMessage(String messages) {
         for (ObserverHome obs : observers) {

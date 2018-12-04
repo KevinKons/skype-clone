@@ -6,13 +6,13 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import model.User;
 
-public class SendMessageToClient extends Thread {
+public class SendMessage extends Thread {
 
     private String content;
     private String nickname;
     private final int PORT = 56003;
 
-    public SendMessageToClient(String content, String nickname) {
+    public SendMessage(String content, String nickname) {
         this.content = content;
         this.nickname = nickname;
     }

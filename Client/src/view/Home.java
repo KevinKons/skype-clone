@@ -176,6 +176,11 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
 
         btnCall.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCall.setText("Call");
+        btnCall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCallActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelActionsLayout = new javax.swing.GroupLayout(panelActions);
         panelActions.setLayout(panelActionsLayout);
@@ -269,7 +274,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
     }//GEN-LAST:event_btnAddContactActionPerformed
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-        controllerHome.sendMessageToClient(txtMessage.getText());
+        controllerHome.sendMessage(txtMessage.getText());
         editorPanelShowMessages.setText(editorPanelShowMessages.getText() + "\n" + ManageControllers.getInstance().getUser().getNickname() + ": " + txtMessage.getText() + "\n");
         txtMessage.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
@@ -282,6 +287,11 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         controllerProfile.update(name, status);
         
     }//GEN-LAST:event_btnConfigActionPerformed
+
+    private void btnCallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCallActionPerformed
+        System.out.println("d");
+        
+    }//GEN-LAST:event_btnCallActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddContact;

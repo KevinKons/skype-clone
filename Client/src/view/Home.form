@@ -290,6 +290,9 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Call"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCallActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
