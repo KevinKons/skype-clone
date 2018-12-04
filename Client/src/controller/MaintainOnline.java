@@ -9,13 +9,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import model.User;
-import util.CloseConnection;
 
 public class MaintainOnline extends Thread implements Observed {
 
     private List<ObserverHome> observers = new ArrayList<>();
 
-    //56000
+    //56001
     @Override
     public void run() {
 

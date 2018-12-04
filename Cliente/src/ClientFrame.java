@@ -19,7 +19,7 @@ import javax.sound.sampled.TargetDataLine;
 public class ClientFrame extends javax.swing.JFrame {
 
     public int portServer = 8888;
-    public String add_server = "192.168.0.138";
+    public String add_server = "192.168.0.108";
     
     public static AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;
