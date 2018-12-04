@@ -261,6 +261,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         controllerHome.sendMessageToClient(txtMessage.getText());
         editorPanelShowMessages.setText(editorPanelShowMessages.getText() + "\n" + txtMessage.getText());
+        txtMessage.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import model.User;
 
 public class ListenMessages extends Thread implements Observed {
 
@@ -36,16 +37,18 @@ public class ListenMessages extends Thread implements Observed {
                     //Locating the sender through of IP
                     String nickname = message[0];
                     String content = message[1];
+                    User user = ManageControllers.getInstance().getUser();
+                    
                     //Insert the message in Chat with the sender
-                    if (ManageControllers.getInstance().getUser().getChats() != null) {
-                        for (Chat chat : ManageControllers.getInstance().getUser().getChats()) {
-                            if (chat.getNickname().equalsIgnoreCase(nickname)) {
+                    if (user.getChats() != null) {
+                        for (Chat chat : user.getChats()) {
+                            if (chat.getNickname().equals(nickname)) {
                                 chat.addMenssage(content);
                             }
                         }
                     } else {
                         Chat chat = new Chat(nickname, content);
-                        ManageControllers.getInstance().getUser().addChat(chat);
+                        user.addChat(chat);
                     }
                     addMessage(content);
                 } catch (IOException e) {
@@ -71,6 +74,10 @@ public class ListenMessages extends Thread implements Observed {
         for(ObserverHome obs: observers){
             obs.addMessage(message);
         }
+    }
+    
+    private void showMessages(String messages){
+        
     }
     
 }
