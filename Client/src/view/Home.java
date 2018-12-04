@@ -454,12 +454,7 @@ public class Home extends javax.swing.JFrame implements ObserverHome {
         panelContact.setSize(210, 105);
 
         panelContact.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-<<<<<<< HEAD
-        
-        System.out.println("Adicionou: " + nickname);
-=======
 
->>>>>>> master
         contacts.put(nickname, panelContact);
         painelScrollInside.add(panelContact);
 

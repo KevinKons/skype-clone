@@ -4,22 +4,31 @@ import controller.ManageControllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import model.User;
 
 public class SendMessageToClient extends Thread {
 
     private String content;
-    private String ip;
+    private String nickname;
     private final int PORT = 56003;
 
-    public SendMessageToClient(String content, String ip) {
+    public SendMessageToClient(String content, String nickname) {
         this.content = content;
-        this.ip = ip;
+        this.nickname = nickname;
     }
 
     @Override
     public void run() {
 
         try {
+            User user = ManageControllers.getInstance().getUser();
+            String ip = "";
+            for(User contact : user.getContacts()) {
+                if(contact.getNickname().equals(nickname)) {
+                    ip = contact.getIp();
+                }
+            }
+            
             System.out.println("Abrindo Socket SendMessage");
             System.out.println("IP: " + ip);
             Socket conn = new Socket(ip, PORT);
